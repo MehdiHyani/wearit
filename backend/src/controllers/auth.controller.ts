@@ -83,3 +83,11 @@ export async function refreshTokenController(req: Request, res: Response) {
     return res.status(200).json({ success: true });
 }
 
+export async function logoutController(req: Request, res: Response) {
+    return res
+        .clearCookie('accessToken')
+        .clearCookie('refreshToken')
+        .status(200)
+        .json({ success: true });
+}
+
