@@ -1,7 +1,6 @@
-import { hash } from 'argon2';
 import { Router } from 'express';
 import authRouter from './auth.routes';
-// import userRouter from './user.routes';
+import userRouter from './user.routes';
 
 const apiRouter = Router();
 
@@ -11,6 +10,6 @@ apiRouter.get('/', async (req, res) => {
 
 apiRouter.use('/auth', authRouter);
 
-// apiRouter.use('/users', userRouter);
+apiRouter.use('/users', userRouter);
 
 export default apiRouter;
