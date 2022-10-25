@@ -13,11 +13,23 @@ datasource db {
 model Product {
   id Int @id @default(autoincrement())
   name String
-  quantityOnHand Int
   price Float
+  availabilities Availability[]
+  lines Line[]
+  feedbacks Feedback[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  lines Line[]
+}
+
+model Availability {
+  id Int @id @default(autoincrement())
+  store Store @relation(fields: [storeId], references: [id] )
+  storeId Int
+  product Product @relation(fields: [productId], references: [id] )
+  productId Int
+  quantityOnHand Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model User {
@@ -40,13 +52,14 @@ enum Role {
 }
 
 model Line {
-  id Int @id @default(autoincrement())
-  product Product @relation(fields: [productId], references: [id] )
-  productId Int
+  lineNumber Int
   order Order @relation(fields: [orderId], references: [id] )
   orderId Int
+  product Product @relation(fields: [productId], references: [id] )
+  productId Int
   quantity Int
   total Float
+  @@id([lineNumber, orderId])
 }
 
 model Order {
@@ -70,11 +83,11 @@ enum OrderStatus {
 model Store {
   id Int @id @default(autoincrement())
   name String
-  city String
-  address String
+  latitude Float
+  longitutde Float
   openingHours String
   phoneNumber String
-  feedbacks Feedback[]
+  availabilities Availability[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -84,8 +97,8 @@ model Feedback {
   feedback String
   user User @relation(fields: [userId], references: [id] )
   userId Int
-  store Store @relation(fields: [storeId], references: [id] )
-  storeId Int
+  product Product @relation(fields: [productId], references: [id] )
+  productId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
