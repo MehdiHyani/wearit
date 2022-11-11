@@ -1,4 +1,10 @@
 # WEARIT [WIP]
+## Table of Contents
+- [Description](#description)
+- [Database ERD](#database-erd)
+- [Installation](#installation)
+- [Credits](#credits)
+- [License](#license)
 ## Description
 
 WEARIT is an inventory management platform for the dummy line of clothes' called <i><b>WEARIT</b></i>
@@ -7,18 +13,15 @@ WEARIT is an inventory management platform for the dummy line of clothes' called
 - Our project mainly solves the problem of digitalization, hence removing the need for being physically in the store to view what it offers
 ## Database ERD
 ![Database ERD](./db_erd.png)
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
 
 ## Installation
 
 ### Requirements
 - NodeJs (Preferably node 16+)
 - PostgreSQL
+### Good to have
+- Postman
+- pgAdmin
 
 ### Install Yarn
 If you want to use npm or you already have yarn installed please feel free to skip this section.
