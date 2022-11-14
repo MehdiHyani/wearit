@@ -11,8 +11,12 @@ import {
 
 const userRouter = Router();
 
+// Public routes
 userRouter.post('/', validateResource(createUserSchema), createUserController);
 
-userRouter.get('/me', verifyLogin, getCurrentUserController);
+// Private [manager,customer] routes
+userRouter
+    .use(verifyLogin)
+    .get('/me', getCurrentUserController);
 
 export default userRouter;

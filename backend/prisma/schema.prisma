@@ -50,7 +50,7 @@ model User {
 
 enum Role {
   customer
-  admin
+  manager
 }
 
 model Line {

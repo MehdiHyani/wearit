@@ -5,10 +5,10 @@ import { loginSchema } from '../schema/auth.schema';
 
 const authRouter = Router();
 
-authRouter.post('/login', validateResource(loginSchema), loginController);
-
-authRouter.get('/refresh', refreshTokenController);
-
-authRouter.get('/logout', logoutController);
+// Public routes
+authRouter
+    .post('/login', validateResource(loginSchema), loginController)
+    .get('/refresh', refreshTokenController)
+    .get('/logout', logoutController);
 
 export default authRouter;

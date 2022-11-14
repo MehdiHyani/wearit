@@ -13,7 +13,7 @@ async function seedUsers() {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 password: user.password,
-            }, 'admin');
+            }, 'manager');
             return id;
         }))
         log.info("Seeded users")

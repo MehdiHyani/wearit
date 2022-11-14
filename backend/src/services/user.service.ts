@@ -19,7 +19,7 @@ export function validatePassword(hash: string, candidatePassword: string) {
     return verify(hash, candidatePassword);
 }
 
-export async function createUser(user: Omit<CreateUserInput, 'passwordConfirmation'>, role: 'customer'|'admin' = 'customer') {
+export async function createUser(user: Omit<CreateUserInput, 'passwordConfirmation'>, role: 'customer'|'manager' = 'customer') {
     user.password = await hash(user.password);
     return await prisma.user.create({
         data: {
