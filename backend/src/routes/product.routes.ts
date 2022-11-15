@@ -22,7 +22,7 @@ productRouter
 productRouter
   .use(verifyLogin)
   .use(verifyManager)
-  .delete("/:id", deleteProductController)
-  .post("/", validateResource(createProductSchema), createProductController);
+  .post("/", validateResource(createProductSchema), createProductController)
+  .delete("/:id", deleteProductController);
 
 export default productRouter;

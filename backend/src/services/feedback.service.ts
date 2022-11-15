@@ -3,7 +3,17 @@ import prisma from "../utils/db";
 
 
 export function getFeedbacksByProduct(productId: number) {
-    return prisma.feedback.findMany({ where: { productId } })
+    return prisma.feedback.findMany({
+        where: { productId },
+        select: {
+            user: {
+                select: {
+                    firstName: true,
+                    lastName: true,
+                }
+            }
+        }
+    })
 }
 
 export function createFeedback(feedback: CreateFeedbackInput, userId: number) {

@@ -1,4 +1,5 @@
 import { CreateProductInput } from "../schema/product.schema";
+import { itemsPerPage } from "../utils/constants";
 import prisma from "../utils/db";
 
 export function getProducts(page: number) {
@@ -8,8 +9,8 @@ export function getProducts(page: number) {
                 _count: 'desc'
             }
         },
-        skip: (page-1)*10,
-        take: 10
+        skip: (page-1)*itemsPerPage,
+        take: itemsPerPage
     });
 }
 

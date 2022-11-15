@@ -3,3 +3,5 @@ export const userPrivateFields = [
     'createdAt',
     'updatedAt',
 ]
+
+export const itemsPerPage = 10;
