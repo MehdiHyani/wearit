@@ -1,6 +1,7 @@
+import { Role } from "@prisma/client";
 import { Request, Response } from "express";
-import { CreateUserInput } from "../schema/user.schema";
-import { createUser } from "../services/user.service";
+import { CreateUserInput, editCurrentUserInput, editUserInput } from "../schema/user.schema";
+import { createUser, editUser } from "../services/user.service";
 
 export async function createUserController(req: Request<{}, {}, CreateUserInput>, res: Response) {
     const { body } = req;
@@ -18,4 +19,41 @@ export async function createUserController(req: Request<{}, {}, CreateUserInput>
 
 export async function getCurrentUserController(req: Request, res: Response) {
     return res.send(res.locals.user);
+}
+
+export async function editCurrentUserController(req: Request<{}, {}, editCurrentUserInput>, res: Response) {
+    try {
+        const { firstName, lastName, password } = req.body;
+
+
+
+        await editUser(res.locals.user.id,
+            { 
+                firstName: firstName ? firstName: undefined,
+                lastName: lastName ? lastName: undefined,
+                password: password ? password: undefined,
+            }
+        )
+    } catch (error) {
+        return res.sendStatus(500).send(error);
+    }
+}
+
+export async function editUserController(req: Request<{}, {}, editUserInput>, res: Response) {
+    try {
+        const { firstName, lastName, password, role } = req.body;
+
+
+
+        await editUser(res.locals.user.id,
+            { 
+                firstName: firstName ? firstName: undefined,
+                lastName: lastName ? lastName: undefined,
+                password: password ? password: undefined,
+                role: role ? role as Role: undefined,
+            }
+        )
+    } catch (error) {
+        return res.sendStatus(500).send(error);
+    }
 }

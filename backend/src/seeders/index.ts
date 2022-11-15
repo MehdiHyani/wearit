@@ -71,6 +71,7 @@ async function seedAvailabilities() {
 
 async function seedFeedbacks() {
     try {
+        await prisma.feedback.deleteMany();
         const users = await prisma.user.findMany();
         const products = await prisma.product.findMany();
         await Promise.all(products.map(async (product) => {
