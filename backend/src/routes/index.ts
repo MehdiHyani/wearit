@@ -2,6 +2,7 @@ import { Router } from 'express';
 import authRouter from './auth.routes';
 import availabilityRouter from './availability.routes';
 import feedbackRouter from './feedback.routes';
+import orderRouter from './order.routes';
 import productRouter from './product.routes';
 import storeRouter from './store.routes';
 import userRouter from './user.routes';
@@ -24,6 +25,6 @@ apiRouter.use('/products', productRouter);
 
 apiRouter.use('/availabilities', availabilityRouter);
 
-// apiRouter.use('/orders');
+apiRouter.use('/orders', orderRouter);
 
 export default apiRouter;

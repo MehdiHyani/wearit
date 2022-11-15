@@ -1,7 +1,7 @@
 import { Role } from "@prisma/client";
 import { Request, Response } from "express";
 import { CreateUserInput, editCurrentUserInput, editUserInput } from "../schema/user.schema";
-import { createUser, editUser } from "../services/user.service";
+import { createUser, editUser, getUserById } from "../services/user.service";
 
 export async function createUserController(req: Request<{}, {}, CreateUserInput>, res: Response) {
     const { body } = req;
@@ -53,6 +53,15 @@ export async function editUserController(req: Request<{}, {}, editUserInput>, re
                 role: role ? role as Role: undefined,
             }
         )
+    } catch (error) {
+        return res.sendStatus(500).send(error);
+    }
+}
+
+export async function getUserByIdController(req: Request, res: Response) {
+    try {
+        const user = await getUserById(parseInt(req.params.userId))
+        return res.status(200).send(user)
     } catch (error) {
         return res.sendStatus(500).send(error);
     }

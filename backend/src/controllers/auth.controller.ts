@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { get, omit } from 'lodash';
 import { LoginInput } from '../schema/auth.schema';
-import { findSessionById, signAccessToken, signRefreshToken } from '../services/auth.service';
-import { findUserByEmail, findUserById, validatePassword } from '../services/user.service';
+import { getSessionById, signAccessToken, signRefreshToken } from '../services/auth.service';
+import { getUserByEmail, getUserById, validatePassword } from '../services/user.service';
 import { userPrivateFields } from '../utils/constants';
 import { verifyJwt } from '../utils/jwt';
 
@@ -14,7 +14,7 @@ export async function loginController(
 
     const message = 'Invalid email or password';
 
-    const user = await findUserByEmail(email);
+    const user = await getUserByEmail(email);
 
     if (!user) {
         return res.status(403).send(message);
@@ -57,13 +57,13 @@ export async function refreshTokenController(req: Request, res: Response) {
         return res.status(401).send(errorMessage);
     }
 
-    const session = await findSessionById(decoded.session);
+    const session = await getSessionById(decoded.session);
 
     if (!session || !session.valid) {
         return res.status(401).send(errorMessage);
     }
 
-    const user = await findUserById(session.userId);
+    const user = await getUserById(session.userId);
 
     if (!user) {
         return res.status(401).send(errorMessage);

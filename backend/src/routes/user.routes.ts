@@ -4,6 +4,7 @@ import {
     editCurrentUserController,
     editUserController,
     getCurrentUserController,
+    getUserByIdController,
 } from '../controllers/user.controller';
 import validateResource from '../middlewares/validateResource';
 import verifyLogin from '../middlewares/verifyLogin';
@@ -28,5 +29,6 @@ userRouter
     .use(verifyLogin)
     .use(verifyManager)
     .patch('/:userId', validateResource(editUserSchema), editUserController)
+    .get('/:userId', getUserByIdController)
 
 export default userRouter;

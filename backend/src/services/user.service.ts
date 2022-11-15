@@ -4,13 +4,13 @@ import prisma from "../utils/db";
 import { CreateUserInput } from "../schema/user.schema";
 import { User } from '@prisma/client';
 
-export function findUserByEmail(email: string) {
+export function getUserByEmail(email: string) {
     return prisma.user.findUniqueOrThrow({
         where: { email }
     })
 }
 
-export function findUserById(id: number) {
+export function getUserById(id: number) {
     return prisma.user.findUniqueOrThrow({
         where: { id }
     })
