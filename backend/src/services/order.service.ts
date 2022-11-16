@@ -13,8 +13,17 @@ export function getOrders(page = 1) {
   });
 }
 
-export function confirmOrder(orderId: number) {
-  return prisma.order.update({
+export async function confirmOrder(orderId: number) {
+  const order = await prisma.order.findUniqueOrThrow({
+    where: {
+      id: orderId
+    }
+  });
+
+  if(order.status !== OrderStatus.pending)
+    throw new Error("You cannot cancel this order");
+
+  return await prisma.order.update({
     where: { id: orderId },
     data: {
       status: OrderStatus.confirmed,
@@ -22,8 +31,17 @@ export function confirmOrder(orderId: number) {
   });
 }
 
-export function completeOrder(orderId: number) {
-  return prisma.order.update({
+export async function completeOrder(orderId: number) {
+  const order = await prisma.order.findUniqueOrThrow({
+    where: {
+      id: orderId
+    }
+  });
+
+  if(order.status !== OrderStatus.confirmed)
+    throw new Error("You cannot complete this order");
+
+  return await prisma.order.update({
     where: { id: orderId },
     data: {
       status: OrderStatus.completed,
@@ -31,9 +49,21 @@ export function completeOrder(orderId: number) {
   });
 }
 
-export function cancelOrder(orderId: number) {
-  return prisma.order.update({
-    where: { id: orderId },
+export async function cancelOrder(orderId: number) {
+
+  const order = await prisma.order.findUniqueOrThrow({
+    where: {
+      id: orderId
+    }
+  });
+
+  if(order.status !== OrderStatus.pending)
+    throw new Error("You cannot cancel this order");
+
+  return await prisma.order.update({
+    where: {
+      id: orderId
+    },
     data: {
       status: OrderStatus.canceled,
     },

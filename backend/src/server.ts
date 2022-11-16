@@ -21,9 +21,8 @@ app.use('/', apiRouter);
 
 app.listen(process.env.PORT ? process.env.PORT : 5000,
     () => log.info(
-        `Postgres connected && Server started at http://localhost:
-            ${process.env.PORT ? process.env.PORT : 5000}
-        `
+        'Postgres connected && Server started at '+
+        `http://localhost:${process.env.PORT ? process.env.PORT : 5000}`
     )
 );
 
