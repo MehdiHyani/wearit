@@ -5,7 +5,7 @@ import userRouter from './user.routes';
 const apiRouter = Router();
 
 apiRouter.get('/', async (req, res) => {
-    res.status(200).send('WEARIT API running perfectly')
+    res.status(200).send('WEARIT API running perfectly');
 });
 
 apiRouter.use('/auth', authRouter);

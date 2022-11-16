@@ -2,11 +2,12 @@ import { Request, Response } from "express";
 import { CreateUserInput } from "../schema/user.schema";
 import { createUser } from "../services/user.service";
 
-export async function createUserController(req: Request<{}, {}, CreateUserInput>, res: Response) {
+export async function createUserController(req: Request<Record<string, never>,
+    Record<string, never>, CreateUserInput>, res: Response) {
     const { body } = req;
     try {
-        const { passwordConfirmation, ...newUser } = body;
-        const user = await createUser(newUser);
+        const { email, firstName, lastName, password } = body;
+        const user = await createUser({ email, firstName, lastName, password });
         return res.status(201).send(user);
     } catch (e: any) {
         if (e.code && e.code === "P2002") {
