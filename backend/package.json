@@ -34,6 +34,7 @@
     "db:reset": "prisma migrate reset",
     "db:seed": "ts-node src/seeders/index.ts",
     "db:studio": "prisma studio --port 7777",
+    "db:generate": "prisma generate",
     "dev": "nodemon src/server.ts",
     "build": "prisma generate && tsc",
     "seed": "node build/src/seeders/index.js",
