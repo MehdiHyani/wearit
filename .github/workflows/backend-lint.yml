@@ -9,7 +9,6 @@ jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
@@ -18,18 +17,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
-      
-      - name: cd to backend
-        run: cd backend
 
       - name: Install backend dependencies
+        working-directory: ./backend
         run: yarn install
       
       - name: Generate Prisma Types
-        run: yarn db:generate 
+        working-directory: ./backend
+        run: cd backend && yarn db:generate 
 
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
-          prettier: true
+      - name: Run Eslint
+        working-directory: ./backend
+        run: yarn lint

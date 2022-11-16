@@ -38,7 +38,8 @@
     "dev": "nodemon src/server.ts",
     "build": "prisma generate && tsc",
     "seed": "node build/src/seeders/index.js",
-    "start": "node build/src/server.js"
+    "start": "node build/src/server.js",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
