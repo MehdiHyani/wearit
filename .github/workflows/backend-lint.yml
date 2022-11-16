@@ -18,8 +18,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
+      
+      - name: cd to backend
+        run: cd backend
 
-      - name: Install dependencies
+      - name: Install backend dependencies
         run: yarn install
       
       - name: Generate Prisma Types
