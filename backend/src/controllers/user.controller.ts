@@ -1,6 +1,13 @@
+import { Role } from "@prisma/client";
+import { NotFoundError } from "@prisma/client/runtime";
 import { Request, Response } from "express";
-import { CreateUserInput } from "../schema/user.schema";
-import { createUser } from "../services/user.service";
+import {
+  CreateUserInput,
+  editCurrentUserInput,
+  editUserInput,
+  getUsersInput,
+} from "../schema/user.schema";
+import { createUser, editUser, getUserById, getUsers } from "../services/user.service";
 
 export async function createUserController(req: Request<Record<string, never>,
     Record<string, never>, CreateUserInput>, res: Response) {
@@ -17,6 +24,70 @@ export async function createUserController(req: Request<Record<string, never>,
     }
 }
 
+
+export async function getUsersController(req: Request<Record<string, never>,
+  Record<string, never>, getUsersInput>, res: Response) {
+  try {
+      const { body: { page } } = req;
+      const users = await getUsers(page);
+      return res.send(users);
+  } catch (error) {
+      res.status(500).send(error);
+  }
+}
+
 export async function getCurrentUserController(req: Request, res: Response) {
-    return res.send(res.locals.user);
+  const user = res.locals.user;
+  delete user.iat;
+  delete user.exp;
+  return res.send(res.locals.user);
+}
+
+export async function editCurrentUserController(
+  req: Request<Record<string, never>, Record<string, never>, editCurrentUserInput>,
+  res: Response
+) {
+  try {
+    const { firstName, lastName, password } = req.body;
+
+    await editUser(res.locals.user.id, {
+      firstName,
+      lastName,
+      password,
+    });
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.sendStatus(500).send(error);
+  }
+}
+
+export async function editUserController(
+  req: Request<Record<string, unknown>, Record<string, never>, editUserInput>,
+  res: Response
+) {
+  try {
+    const { firstName, lastName, password, role } = req.body;
+
+    await editUser(parseInt(req.params.userId as string), {
+      firstName,
+      lastName,
+      password,
+      role: role as Role | undefined,
+    });
+
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.sendStatus(500).send(error);
+  }
+}
+
+export async function getUserByIdController(req: Request, res: Response) {
+  try {
+    const user = await getUserById(parseInt(req.params.userId));
+    return res.status(200).send(user);
+  } catch (error) {
+    if(error instanceof NotFoundError)
+            return res.status(404).send(error.message);
+    return res.sendStatus(500).send(error);
+  }
 }

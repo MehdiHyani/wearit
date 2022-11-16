@@ -36,7 +36,7 @@ export async function signRefreshToken(userId: number) {
     return refreshToken;
 }
 
-export function findSessionById(sessionId: number) {
+export function getSessionById(sessionId: number) {
     return prisma.session.findUnique({
         where: {
             id: sessionId

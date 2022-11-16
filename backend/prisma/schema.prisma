@@ -50,7 +50,7 @@ model User {
 
 enum Role {
   customer
-  admin
+  manager
 }
 
 model Line {
@@ -59,8 +59,8 @@ model Line {
   orderId Int
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   productId Int
+  price Float
   quantity Int
-  total Float
   @@id([lineNumber, orderId])
 }
 
@@ -70,6 +70,8 @@ model Order {
   total Float
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId Int
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  storeId Int
   lines Line[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -89,6 +91,7 @@ model Store {
   longitutde Float
   openingHours String
   phoneNumber String
+  orders Order[]
   availabilities Availability[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

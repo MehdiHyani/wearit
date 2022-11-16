@@ -3,7 +3,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookies from 'cookie-parser';
-import sanitizeBody from '../middlewares/sanitizeBody';
 
 function applyGlobalMiddlewares(expressApp: Express) {
     expressApp.enable('trust proxy');
@@ -17,8 +16,6 @@ function applyGlobalMiddlewares(expressApp: Express) {
     }));
     expressApp.use(helmet());
     expressApp.use(morgan(':method :url :status - :response-time ms'));
-
-    expressApp.use(sanitizeBody);
 }
 
 export default applyGlobalMiddlewares;

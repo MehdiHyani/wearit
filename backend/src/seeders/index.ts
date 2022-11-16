@@ -13,7 +13,7 @@ async function seedUsers() {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 password: user.password,
-            }, 'admin');
+            }, 'manager');
             return id;
         }));
         log.info("Seeded users");
@@ -71,6 +71,7 @@ async function seedAvailabilities() {
 
 async function seedFeedbacks() {
     try {
+        await prisma.feedback.deleteMany();
         const users = await prisma.user.findMany();
         const products = await prisma.product.findMany();
         await Promise.all(products.map(async product => {
