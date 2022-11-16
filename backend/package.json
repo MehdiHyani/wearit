@@ -36,9 +36,10 @@
     "db:generate": "prisma generate",
     "dev": "nodemon src/server.ts",
     "build": "prisma generate && tsc",
-    "seed": "node build/src/seeders/index.js",
-    "start": "node build/src/server.js",
-    "lint": "eslint ."
+    "seed": "yarn deploy && node build/seeders/index.js",
+    "start": "node build/server.js",
+    "lint": "eslint .",
+    "deploy": "prisma migrate deploy"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
