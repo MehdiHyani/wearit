@@ -1,4 +1,3 @@
-import { hash } from 'argon2'
 import { verify } from 'argon2';
 import prisma from "../utils/db";
 import { CreateUserInput } from "../schema/user.schema";
@@ -8,13 +7,13 @@ import { itemsPerPage } from '../utils/constants';
 export function getUserByEmail(email: string) {
     return prisma.user.findUniqueOrThrow({
         where: { email }
-    })
+    });
 }
 
 export function getUserById(id: number) {
     return prisma.user.findUniqueOrThrow({
         where: { id }
-    })
+    });
 }
 
 export function validatePassword(hash: string, candidatePassword: string) {
@@ -39,7 +38,7 @@ export async function editUser(userId: number, data: Partial<User>) {
     });
 }
 
-export async function getUsers(page: number = 1) {
+export async function getUsers(page = 1) {
     return prisma.user.findMany({
         orderBy: {
             createdAt: 'desc'

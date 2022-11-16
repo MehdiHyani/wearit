@@ -2,7 +2,7 @@ import { CreateProductInput } from "../schema/product.schema";
 import { itemsPerPage } from "../utils/constants";
 import prisma from "../utils/db";
 
-export function getProducts(page: number = 1) {
+export function getProducts(page = 1) {
     return prisma.product.findMany({
         orderBy: {
             lines: {
@@ -40,7 +40,7 @@ export function getProductsByQuery(query: string, page: number) {
         },
         skip: (page-1)*10,
         take: 10
-    })
+    });
 
 }
 
@@ -61,9 +61,9 @@ export function getProductById(productId: number) {
             feedbacks: true,
             availabilities: true,
         }
-    })
+    });
 }
 
 export function createProduct(product: CreateProductInput) {
-    return prisma.product.create({ data: product })
+    return prisma.product.create({ data: product });
 }

@@ -12,8 +12,8 @@ prisma.$use(async (params, next) => {
         && params.args.data.password // In case password is not changed
     )
         params.args.data.password = await hash(params.args.data.password);
-    const result = await next(params)
-    return result
-})
+    const result = await next(params);
+    return result;
+});
 
 export default prisma;

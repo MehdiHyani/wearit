@@ -17,9 +17,9 @@ export function getFeedbacksByProduct(productId: number) {
                 }
             }
         }
-    })
+    });
 }
 
 export function createFeedback(feedback: CreateFeedbackInput, userId: number) {
-    return prisma.feedback.create({ data: {...feedback, userId} })
+    return prisma.feedback.create({ data: {...feedback, userId} });
 }

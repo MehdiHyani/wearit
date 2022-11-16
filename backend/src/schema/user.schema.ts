@@ -4,22 +4,27 @@ import { number, object, string, TypeOf } from 'zod';
 export const createUserSchema = object({
     body: object({
         firstName: string({
+            // eslint-disable-next-line camelcase
             required_error: 'First Name is required',
         }),
         lastName: string({
+            // eslint-disable-next-line camelcase
             required_error: 'Last Name is required',
         }),
         password: string({
+            // eslint-disable-next-line camelcase
             required_error: 'Password is required',
         }).min(8, 'Password should be at least 8 characters'),
         passwordConfirmation: string({
+            // eslint-disable-next-line camelcase
             required_error: 'Password Confirmation is required',
         }),
         email: string({
+            // eslint-disable-next-line camelcase
             required_error: 'Email is required',
         }).email('Please provide a valid email'),
 
-    }).refine((data) => data.password === data.passwordConfirmation, {
+    }).refine(data => data.password === data.passwordConfirmation, {
         message: 'Passwords do not match',
         path: ['passwordConfirmation'],
     }),
@@ -31,7 +36,7 @@ export const editCurrentUserSchema = object({
         lastName: string().optional(),
         password: string().min(8, 'Password should be at least 8 characters').optional(),
         passwordConfirmation: string().optional(),
-    }).refine((data) => data.password === data.passwordConfirmation, {
+    }).refine(data => data.password === data.passwordConfirmation, {
         message: 'Passwords do not match',
         path: ['passwordConfirmation'],
     }),
@@ -44,9 +49,9 @@ export const editUserSchema = object({
         // TODO: Maybe find a better way to handle password change from manager
         password: string().min(8, 'Password should be at least 8 characters').optional(),
         role: string().optional()
-    }).refine((data) => {
+    }).refine(data => {
         if (data.role)
-            return Object.keys(Role).includes(data.role)
+            return Object.keys(Role).includes(data.role);
         return true;
     }),
 });

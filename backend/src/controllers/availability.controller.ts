@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { createAvailabilityInput, deleteAvailabilityInput, getAvailabilitiesInput, updateAvailabilityInput } from "../schema/availability.schema";
 import { createAvailability, deleteAvailability, getAvailabilities, getAvailabilityByProduct, updateAvailability } from "../services/availability.service";
 
-export async function getAvailabilitiesController(req: Request<{}, {}, getAvailabilitiesInput>, res: Response) {
+export async function getAvailabilitiesController(req: Request<Record<string, never>,
+    Record<string, never>, getAvailabilitiesInput>, res: Response) {
     try {
         const { body: { page } } = req;
         const availabilities = await getAvailabilities(page);
@@ -14,14 +15,16 @@ export async function getAvailabilitiesController(req: Request<{}, {}, getAvaila
 
 export async function getAvailabilityByProductController(req: Request, res: Response) {
     try {
-        const availabilities = await getAvailabilityByProduct(parseInt(req.params.productId as string));
+        const availabilities = await getAvailabilityByProduct(
+            parseInt(req.params.productId as string));
         return res.send(availabilities);
     } catch (error) {
         res.status(500).send(error);
     }
 }
 
-export async function createAvailabilityController(req: Request<{}, {}, createAvailabilityInput>, res: Response) {
+export async function createAvailabilityController(req: Request<Record<string, never>,
+    Record<string, never>, createAvailabilityInput>, res: Response) {
     try {
         const { body: availability } = req;
         await createAvailability(availability);
@@ -31,7 +34,8 @@ export async function createAvailabilityController(req: Request<{}, {}, createAv
     }
 }
 
-export async function deleteAvailabilityController(req: Request<{}, {}, deleteAvailabilityInput>, res: Response) {
+export async function deleteAvailabilityController(req: Request<Record<string, never>,
+    Record<string, never>, deleteAvailabilityInput>, res: Response) {
     try {
         const { body: { productId, storeId } } = req;
         await deleteAvailability(productId, storeId);
@@ -41,7 +45,8 @@ export async function deleteAvailabilityController(req: Request<{}, {}, deleteAv
     }
 }
 
-export async function updateAvailabilityController(req: Request<{}, {}, updateAvailabilityInput>, res: Response) {
+export async function updateAvailabilityController(req: Request<Record<string, never>,
+    Record<string, never>, updateAvailabilityInput>, res: Response) {
     try {
         const { body: { productId, storeId, quantityOnHand } } = req;
         await updateAvailability(productId, storeId, quantityOnHand);

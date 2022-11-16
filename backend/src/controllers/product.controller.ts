@@ -3,7 +3,8 @@ import { Request, Response } from "express";
 import { CreateProductInput, getProductsByQueryInput, getProductsInput } from "../schema/product.schema";
 import { createProduct, deleteProductById, getFeaturedProducts, getProductById, getProducts, getProductsByQuery } from "../services/product.service";
 
-export async function getProductsController(req: Request<{}, {}, getProductsInput>, res: Response) {
+export async function getProductsController(req: Request<Record<string, never>,
+    Record<string, never>, getProductsInput>, res: Response) {
     try {
         const { body: { page } } = req;
         const feedbacks = await getProducts(page);
@@ -22,7 +23,8 @@ export async function getFeaturedProductsController(req: Request, res: Response)
     }
 }
 
-export async function getProductsByQueryController(req: Request<{}, {}, getProductsByQueryInput>, res: Response) {
+export async function getProductsByQueryController(req: Request<Record<string, never>,
+    Record<string, never>, getProductsByQueryInput>, res: Response) {
     try {
         const { body: { page, query } } = req;
         const feedbacks = await getProductsByQuery(query, page);
@@ -54,9 +56,10 @@ export async function deleteProductController(req: Request, res: Response) {
     }
 }
 
-export async function createProductController(req: Request<{}, {}, CreateProductInput>, res: Response) {
+export async function createProductController(req: Request<Record<string, never>,
+    Record<string, never>, CreateProductInput>, res: Response) {
     try {
-        const { body: { imageUrl, name, price } } = req
+        const { body: { imageUrl, name, price } } = req;
         const product = await createProduct({ imageUrl, name, price });
         return res.status(201).send(product);
     } catch (error) {

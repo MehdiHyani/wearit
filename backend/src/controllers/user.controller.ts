@@ -9,28 +9,24 @@ import {
 } from "../schema/user.schema";
 import { createUser, editUser, getUserById, getUsers } from "../services/user.service";
 
-export async function createUserController(
-  req: Request<{}, {}, CreateUserInput>,
-  res: Response
-) {
-  try {
-    const {
-      body: { email, firstName, lastName, password },
-    } = req;
-    const user = await createUser({ email, firstName, lastName, password });
-    return res.send(user.id).status(201);
-  } catch (e: any) {
-    if (e.code && e.code === "P2002") {
-      return res
-        .status(409)
-        .send(`Account with the same credentials already exists`);
+export async function createUserController(req: Request<Record<string, never>,
+    Record<string, never>, CreateUserInput>, res: Response) {
+    const { body } = req;
+    try {
+        const { email, firstName, lastName, password } = body;
+        const user = await createUser({ email, firstName, lastName, password });
+        return res.status(201).send(user);
+    } catch (e: any) {
+        if (e.code && e.code === "P2002") {
+            return res.status(409).send(`Account with the email ${body.email} already exists`);
+        }
+        return res.status(500).send(e);
     }
-    return res.status(500).send(e);
-  }
 }
 
 
-export async function getUsersController(req: Request<{}, {}, getUsersInput>, res: Response) {
+export async function getUsersController(req: Request<Record<string, never>,
+  Record<string, never>, getUsersInput>, res: Response) {
   try {
       const { body: { page } } = req;
       const users = await getUsers(page);
@@ -42,13 +38,13 @@ export async function getUsersController(req: Request<{}, {}, getUsersInput>, re
 
 export async function getCurrentUserController(req: Request, res: Response) {
   const user = res.locals.user;
-  delete user["iat"];
-  delete user["exp"];
+  delete user.iat;
+  delete user.exp;
   return res.send(res.locals.user);
 }
 
 export async function editCurrentUserController(
-  req: Request<{}, {}, editCurrentUserInput>,
+  req: Request<Record<string, never>, Record<string, never>, editCurrentUserInput>,
   res: Response
 ) {
   try {
@@ -66,20 +62,20 @@ export async function editCurrentUserController(
 }
 
 export async function editUserController(
-  req: Request<{}, {}, editUserInput>,
+  req: Request<Record<string, unknown>, Record<string, never>, editUserInput>,
   res: Response
 ) {
   try {
     const { firstName, lastName, password, role } = req.body;
 
-    await editUser(res.locals.user.id, {
+    await editUser(parseInt(req.params.userId as string), {
       firstName,
       lastName,
       password,
       role: role as Role | undefined,
     });
 
-    return res.sendStatus(200)
+    return res.sendStatus(200);
   } catch (error) {
     return res.sendStatus(500).send(error);
   }

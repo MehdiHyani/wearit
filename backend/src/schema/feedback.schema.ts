@@ -3,9 +3,11 @@ import { number, object, string, TypeOf } from 'zod';
 export const createFeedbackSchema = object({
     body: object({
         feedback: string({
+            // eslint-disable-next-line camelcase
             required_error: 'Feedback is required',
         }),
         productId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'productId is required'
         }),
     }),
@@ -14,6 +16,7 @@ export const createFeedbackSchema = object({
 export const getFeedbacksByProductSchema = object({
     body: object({
         productId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'productId is required'
         }),
     }),

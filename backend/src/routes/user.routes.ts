@@ -23,7 +23,7 @@ userRouter.post('/', validateResource(createUserSchema), createUserController);
 userRouter
     .use(verifyLogin)
     .get('/me', getCurrentUserController)
-    .patch('/me/edit', validateResource(editCurrentUserSchema), editCurrentUserController)
+    .patch('/me/edit', validateResource(editCurrentUserSchema), editCurrentUserController);
 
 // Private [manager] routes
 userRouter
@@ -31,6 +31,6 @@ userRouter
     .use(verifyManager)
     .get('/', validateResource(getUsersSchema), getUsersController)
     .patch('/:userId', validateResource(editUserSchema), editUserController)
-    .get('/:userId', getUserByIdController)
+    .get('/:userId', getUserByIdController);
 
 export default userRouter;

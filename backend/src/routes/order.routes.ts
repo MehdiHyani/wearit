@@ -12,7 +12,7 @@ orderRouter
   .use(verifyLogin)
   .post("/", validateResource(createOrderSchema), createOrderController)
   .get("/:orderId", getOrderByIdController)
-  .patch("/:orderId/cancel", cancelOrderController)
+  .patch("/:orderId/cancel", cancelOrderController);
 
 // Private [manager] routes
 orderRouter
@@ -20,7 +20,7 @@ orderRouter
   .use(verifyManager)
   .get("/", validateResource(getOrdersSchema), getOrdersController)
   .patch("/:orderId/confirm", confirmOrderController)
-  .patch("/:orderId/complete", completeOrderController)
+  .patch("/:orderId/complete", completeOrderController);
 
 
 export default orderRouter;

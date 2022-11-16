@@ -1,0 +1,70 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: wearit-postgresql
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+    restart: unless-stopped
+  backend:
+    container_name: wearit-api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - /api/node_modules
+      - ./api:/api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    networks:
+      - db
+      - app
+    restart: unless-stopped
+  frontend:
+    container_name: wearit-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./app:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app
+    restart: unless-stopped
+  caddy:
+    image: caddy/caddy:2.6.2-alpine
+    container_name: caddy-server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - app
+volumes:
+  caddy_data:
+  caddy_config:
+networks:
+  app:
+  db:
+    driver: bridge

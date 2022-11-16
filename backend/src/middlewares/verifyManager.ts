@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Role } from '@prisma/client'
+import { Role } from '@prisma/client';
 
 function verifyManager(req: Request, res: Response, next: NextFunction) {
     const { user } = res.locals;

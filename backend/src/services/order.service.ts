@@ -3,7 +3,7 @@ import { createOrderInput } from "../schema/order.schema";
 import { itemsPerPage } from "../utils/constants";
 import prisma from "../utils/db";
 
-export function getOrders(page: number = 1) {
+export function getOrders(page = 1) {
   return prisma.order.findMany({
     orderBy: {
       createdAt: "desc",
@@ -59,12 +59,12 @@ export function getOrderById(orderId: number) {
 }
 
 export async function createOrder(userId: number, data: createOrderInput) {
-  var isOrderValid = true;
+  let isOrderValid = true;
 
   // Ensure products are available in that certain Store
   // and that their prices match
   await Promise.all(
-    data.lines.map(async (line) => {
+    data.lines.map(async line => {
       const availability = await prisma.availability.findFirst({
         where: {
           AND: [
@@ -124,9 +124,10 @@ export async function createOrder(userId: number, data: createOrderInput) {
         },
       },
     }),
-    ...data.lines.map((line) => {
+    ...data.lines.map(line => {
       return prisma.availability.update({
         where: {
+          // eslint-disable-next-line camelcase
           storeId_productId: {
             productId: line.productId,
             storeId: data.storeId,

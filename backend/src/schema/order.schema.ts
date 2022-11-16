@@ -1,18 +1,22 @@
-import { number, object, string, TypeOf } from 'zod';
+import { number, object, TypeOf } from 'zod';
 
 export const createOrderSchema = object({
     body: object({
         storeId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Store Id is required'
         }),
         lines: object({
             productId: number({
+                // eslint-disable-next-line camelcase
                 required_error: 'Product Id is required'
             }),
             quantity: number({
+                // eslint-disable-next-line camelcase
                 required_error: 'Quantity is required'
             }),
             price: number({
+                // eslint-disable-next-line camelcase
                 required_error: 'Price is required'
             }),
         }).array().nonempty('Order must not be empty')

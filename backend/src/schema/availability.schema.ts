@@ -1,4 +1,4 @@
-import { number, object, string, TypeOf } from 'zod';
+import { number, object, TypeOf } from 'zod';
 
 export const getAvailabilitiesSchema = object({
     body: object({
@@ -9,12 +9,15 @@ export const getAvailabilitiesSchema = object({
 export const createAvailabilitySchema = object({
     body: object({
         productId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Product id is required'
         }),
         storeId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Store id is required'
         }),
         quantityOnHand: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Quantity on Hand is required'
         }),
     }),
@@ -23,12 +26,15 @@ export const createAvailabilitySchema = object({
 export const updateAvailabilitySchema = object({
     body: object({
         productId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Product id is required'
         }),
         storeId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Store id is required'
         }),
         quantityOnHand: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Quantity on Hand is required'
         }),
     }),
@@ -37,9 +43,11 @@ export const updateAvailabilitySchema = object({
 export const deleteAvailabilitySchema = object({
     body: object({
         productId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Product id is required'
         }),
         storeId: number({
+            // eslint-disable-next-line camelcase
             required_error: 'Store id is required'
         }),
     }),

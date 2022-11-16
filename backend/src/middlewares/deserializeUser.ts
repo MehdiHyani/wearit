@@ -8,7 +8,9 @@ async function deserializeUser(req: Request, res: Response, next: NextFunction) 
         return next();
     }
 
-    const decoded = verifyJwt(accessToken, Buffer.from(process.env.ACCESS_TOKEN_PUBLIC_KEY!, 'base64').toString('ascii'));
+    const decoded = verifyJwt(accessToken,
+        Buffer.from(process.env.ACCESS_TOKEN_PUBLIC_KEY ? process.env.ACCESS_TOKEN_PUBLIC_KEY : '', 'base64'
+    ).toString('ascii'));
 
     if (decoded) {
         res.locals.user = decoded;

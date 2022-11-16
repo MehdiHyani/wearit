@@ -4,6 +4,6 @@ import { getStoresController } from '../controllers/store.controller';
 const storeRouter = Router();
 
 // Public routes
-storeRouter.get('/', getStoresController)
+storeRouter.get('/', getStoresController);
 
 export default storeRouter;

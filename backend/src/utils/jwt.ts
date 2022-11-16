@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export function signJwt(
-    payload: Object,
+    payload: Record<string, unknown>,
     signingKey: string,
     options?: jwt.SignOptions | undefined,
 ) {

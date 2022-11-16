@@ -10,7 +10,8 @@ export function signAccessToken(user: User) {
 
     const accessToken = signJwt(
         payload,
-        Buffer.from(process.env.ACCESS_TOKEN_PRIVATE_KEY!, 'base64').toString('ascii'),
+        Buffer.from(process.env.ACCESS_TOKEN_PRIVATE_KEY ? process.env.ACCESS_TOKEN_PRIVATE_KEY: '', 'base64')
+            .toString('ascii'),
         {
             expiresIn: '15m',
         },
@@ -26,7 +27,7 @@ export async function signRefreshToken(userId: number) {
         {
             session: session.id,
         },
-        Buffer.from(process.env.REFRESH_PRIVATE_KEY!, 'base64').toString('ascii'),
+        Buffer.from(process.env.REFRESH_PRIVATE_KEY ? process.env.REFRESH_PRIVATE_KEY : '', 'base64').toString('ascii'),
         {
             expiresIn: '30d',
         },
@@ -40,5 +41,5 @@ export function getSessionById(sessionId: number) {
         where: {
             id: sessionId
         }
-    })
+    });
 }
