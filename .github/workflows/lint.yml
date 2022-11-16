@@ -25,6 +25,7 @@ jobs:
         run: cd ${{matrix.directory}} && yarn install
       
       - name: Generate Prisma Types
+        if: ${{matrix.directory == 'backend'}}
         run: cd ${{matrix.directory}} && yarn db:generate
       
       - name: Run eslint
