@@ -19,17 +19,10 @@ jobs:
           node-version: 16
 
       - name: Install backend dependencies
-        working-directory: ./backend
-        run: yarn install
+        run: cd backend && yarn install
       
       - name: Generate Prisma Types
-        run: yarn db:generate
+        run: cd backend && yarn db:generate
       
       - name: Run eslint
-        run: yarn lint
-
-      # - name: Run linters
-      #   uses: wearerequired/lint-action@v2
-      #   with:
-      #     eslint: true
-      #     prettier: true
+        run: cd backend && yarn lint
