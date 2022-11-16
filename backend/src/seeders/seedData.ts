@@ -17,7 +17,7 @@ export const users = [
         "firstName": "sami",
         "lastName": "elarif"
     }
-]
+];
 
 export const stores = [
     {
@@ -74,4 +74,4 @@ export const products = [
         price: 399.99,
         imageUrl: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIHggdscfuPVB1Z-p-_H4jC8f3oWiaTnWeJqm5n3iqRnXY8-x74bBXohSJtJ2OpfZRX4HbRYAnwseKgUtrFmSYRCU7D2ZxiVsnbLEUfqSRrM-kICYrRJNLNPA6-4zAcGnBawnVXxhARyOwgcxO9zmUxl9JSRG_6tgLZllMY-axgLmOWcC_IAIplZ74/s600/spain-2022-world-cup-kit-6.jpg'
     },
-]
+];

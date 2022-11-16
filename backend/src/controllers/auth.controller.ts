@@ -7,7 +7,7 @@ import { userPrivateFields } from '../utils/constants';
 import { verifyJwt } from '../utils/jwt';
 
 export async function loginController(
-    req: Request<{}, {}, LoginInput>,
+    req: Request<Record<string, never>, Record<string, never>, LoginInput>,
     res: Response,
 ) {
     const { email, password } = req.body;
@@ -50,7 +50,9 @@ export async function refreshTokenController(req: Request, res: Response) {
 
     const decoded = verifyJwt<{ session: number }>(
         refreshToken,
-        Buffer.from(process.env.REFRESH_PUBLIC_KEY!, 'base64').toString('ascii'),
+        Buffer.from(
+            process.env.REFRESH_PUBLIC_KEY ? process.env.REFRESH_PUBLIC_KEY : '', 'base64'
+        ).toString('ascii'),
     );
 
     if (!decoded) {

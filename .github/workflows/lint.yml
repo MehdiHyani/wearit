@@ -1,0 +1,32 @@
+name: Backend Lint
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  Eslint:
+    name: Run linters
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [backend, frontend]
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Install ${{matrix.directory}} dependencies
+        run: cd ${{matrix.directory}} && yarn install
+      
+      - name: Generate Prisma Types
+        if: ${{matrix.directory == 'backend'}}
+        run: cd ${{matrix.directory}} && yarn db:generate
+      
+      - name: Run eslint
+        run: cd ${{matrix.directory}} && yarn lint

@@ -1,18 +1,17 @@
-import { hash } from 'argon2'
-import { verify } from 'argon2';
+import { hash , verify } from 'argon2';
 import prisma from "../utils/db";
 import { CreateUserInput } from "../schema/user.schema";
 
 export function findUserByEmail(email: string) {
     return prisma.user.findUniqueOrThrow({
         where: { email }
-    })
+    });
 }
 
 export function findUserById(id: number) {
     return prisma.user.findUniqueOrThrow({
         where: { id }
-    })
+    });
 }
 
 export function validatePassword(hash: string, candidatePassword: string) {

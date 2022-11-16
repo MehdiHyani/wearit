@@ -11,22 +11,37 @@
     "@types/mongo-sanitize": "^1.0.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.8.5",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
     "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
     "prisma": "^4.6.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0"
   },
   "scripts": {
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "db:seed": "ts-node src/seeders/index.ts",
     "db:studio": "prisma studio --port 7777",
+    "db:generate": "prisma generate",
     "dev": "nodemon src/server.ts",
     "build": "prisma generate && tsc",
     "seed": "node build/src/seeders/index.js",
-    "start": "node build/src/server.js"
+    "start": "node build/src/server.js",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "typescript": "^4.8.4",
     "@faker-js/faker": "^7.6.0",
     "@prisma/client": "^4.6.0",
     "@types/express": "^4.17.14",
@@ -43,6 +58,7 @@
     "morgan": "^1.10.0",
     "pino": "^8.6.1",
     "pino-pretty": "^9.1.1",
+    "typescript": "^4.8.4",
     "zod": "^3.19.1"
   }
 }
