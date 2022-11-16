@@ -3,7 +3,7 @@ wearit.mehdihyani.me {
         header_down Strict-Transport-Security max-age=31536000;
     }
 }
-api.wearit.mehdihyani.me {
+wearit-api.mehdihyani.me {
     reverse_proxy wearit-api:5000 {
         header_down Strict-Transport-Security max-age=31536000;
     }
