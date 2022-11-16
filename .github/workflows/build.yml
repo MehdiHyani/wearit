@@ -1,4 +1,4 @@
-name: Lint
+name: Build
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   Eslint:
-    name: Eslint
+    name: Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,9 +24,5 @@ jobs:
       - name: Install ${{matrix.directory}} dependencies
         run: cd ${{matrix.directory}} && yarn install
       
-      - name: Generate Prisma Types
-        if: ${{matrix.directory == 'backend'}}
-        run: cd ${{matrix.directory}} && yarn db:generate
-      
-      - name: Run eslint
-        run: cd ${{matrix.directory}} && yarn lint
+      - name: Build ${{matrix.directory}}
+        run: cd ${{matrix.directory}} && yarn build
