@@ -16,9 +16,7 @@ export const createProductSchema = object({
 
 export const getProductsSchema = object({
     body: object({
-        page: number({
-            required_error: 'Page number is required'
-        })
+        page: number().optional()
     })
 });
 

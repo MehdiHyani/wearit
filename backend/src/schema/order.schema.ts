@@ -21,9 +21,7 @@ export const createOrderSchema = object({
 
 export const getOrdersSchema = object({
     body: object({
-        page: number({
-            required_error: 'Page is required'
-        }),
+        page: number().optional(),
     }),
 });
 

@@ -3,6 +3,7 @@ import { verify } from 'argon2';
 import prisma from "../utils/db";
 import { CreateUserInput } from "../schema/user.schema";
 import { User } from '@prisma/client';
+import { itemsPerPage } from '../utils/constants';
 
 export function getUserByEmail(email: string) {
     return prisma.user.findUniqueOrThrow({
@@ -35,5 +36,15 @@ export async function editUser(userId: number, data: Partial<User>) {
             id: userId
         },
         data
+    });
+}
+
+export async function getUsers(page: number = 1) {
+    return prisma.user.findMany({
+        orderBy: {
+            createdAt: 'desc'
+        },
+        skip: (page-1)*itemsPerPage,
+        take: itemsPerPage
     });
 }

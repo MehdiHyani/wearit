@@ -2,13 +2,16 @@ import { NotFoundError } from "@prisma/client/runtime";
 import { Request, Response } from "express";
 import { createOrderInput, getOrdersInput } from "../schema/order.schema";
 import { cancelOrder, completeOrder, confirmOrder, createOrder, getOrderById, getOrders } from "../services/order.service";
+import log from "../utils/logger";
 
 export async function createOrderController(req: Request<{}, {}, createOrderInput>, res: Response) {
     try {
-        const userId = res.locals.user.id
-        const [{ id }] = await createOrder(userId, req.body)
-        return res.status(201).send(id);
+        const userId = res.locals.user.id;
+        const { lines, storeId } = req.body;
+        const [{ id }] = await createOrder(userId, { lines, storeId })
+        return res.status(201).json({ id });
     } catch (error) {
+        log.error(error)
         res.status(500).send(error);
     }
 }

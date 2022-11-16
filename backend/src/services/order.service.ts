@@ -3,7 +3,7 @@ import { createOrderInput } from "../schema/order.schema";
 import { itemsPerPage } from "../utils/constants";
 import prisma from "../utils/db";
 
-export function getOrders(page: number) {
+export function getOrders(page: number = 1) {
   return prisma.order.findMany({
     orderBy: {
       createdAt: "desc",

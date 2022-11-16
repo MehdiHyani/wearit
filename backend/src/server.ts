@@ -16,7 +16,7 @@ applyGlobalMiddlewares(app);
 
 app.use(deserializeUser);
 
-app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 app.listen(process.env.PORT!, () => log.info(`Postgres connected && Server started at http://localhost:${process.env.PORT!}`));
 

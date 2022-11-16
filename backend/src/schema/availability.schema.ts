@@ -2,9 +2,7 @@ import { number, object, string, TypeOf } from 'zod';
 
 export const getAvailabilitiesSchema = object({
     body: object({
-        page: number({
-            required_error: 'Page is required'
-        }),
+        page: number().optional(),
     }),
 });
 

@@ -2,7 +2,7 @@ import { CreateProductInput } from "../schema/product.schema";
 import { itemsPerPage } from "../utils/constants";
 import prisma from "../utils/db";
 
-export function getProducts(page: number) {
+export function getProducts(page: number = 1) {
     return prisma.product.findMany({
         orderBy: {
             lines: {

@@ -6,8 +6,12 @@ export function getFeedbacksByProduct(productId: number) {
     return prisma.feedback.findMany({
         where: { productId },
         select: {
+            feedback: true,
+            id: true,
+            createdAt: true,
             user: {
                 select: {
+                    id: true,
                     firstName: true,
                     lastName: true,
                 }

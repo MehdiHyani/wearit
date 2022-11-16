@@ -9,7 +9,6 @@ const availabilityRouter = Router();
 
 // Public routes
 availabilityRouter
-  .get("/", validateResource(getAvailabilitiesSchema), getAvailabilitiesController)
   .get("/:productId", getAvailabilityByProductController)
 
 
@@ -17,6 +16,7 @@ availabilityRouter
 availabilityRouter
   .use(verifyLogin)
   .use(verifyManager)
+  .get("/", validateResource(getAvailabilitiesSchema), getAvailabilitiesController)
   .post("/", validateResource(createAvailabilitySchema), createAvailabilityController)
   .delete("/", validateResource(deleteAvailabilitySchema), deleteAvailabilityController)
   .patch("/", validateResource(updateAvailabilitySchema), updateAvailabilityController)

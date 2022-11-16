@@ -56,7 +56,8 @@ export async function deleteProductController(req: Request, res: Response) {
 
 export async function createProductController(req: Request<{}, {}, CreateProductInput>, res: Response) {
     try {
-        const product = await createProduct(req.body);
+        const { body: { imageUrl, name, price } } = req
+        const product = await createProduct({ imageUrl, name, price });
         return res.status(201).send(product);
     } catch (error) {
         res.status(500).send(error);

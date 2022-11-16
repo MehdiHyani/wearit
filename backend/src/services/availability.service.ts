@@ -2,7 +2,7 @@ import { createAvailabilityInput } from '../schema/availability.schema';
 import { itemsPerPage } from '../utils/constants';
 import prisma from "../utils/db";
 
-export function getAvailabilities(page: number) {
+export function getAvailabilities(page: number = 1) {
     return prisma.availability.findMany({
         skip: (page - 1) * itemsPerPage,
         take: itemsPerPage,

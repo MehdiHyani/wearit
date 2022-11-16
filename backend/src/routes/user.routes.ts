@@ -5,12 +5,13 @@ import {
     editUserController,
     getCurrentUserController,
     getUserByIdController,
+    getUsersController,
 } from '../controllers/user.controller';
 import validateResource from '../middlewares/validateResource';
 import verifyLogin from '../middlewares/verifyLogin';
 import verifyManager from '../middlewares/verifyManager';
 import {
-    createUserSchema, editCurrentUserSchema, editUserSchema
+    createUserSchema, editCurrentUserSchema, editUserSchema, getUsersSchema
 } from '../schema/user.schema';
 
 const userRouter = Router();
@@ -28,6 +29,7 @@ userRouter
 userRouter
     .use(verifyLogin)
     .use(verifyManager)
+    .get('/', validateResource(getUsersSchema), getUsersController)
     .patch('/:userId', validateResource(editUserSchema), editUserController)
     .get('/:userId', getUserByIdController)
 
