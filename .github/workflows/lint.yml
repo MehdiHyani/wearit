@@ -6,9 +6,12 @@ on:
       - master
 
 jobs:
-  run-linting:
+  Eslint:
     name: Run linters
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [backend, frontend]
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
@@ -18,11 +21,11 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install backend dependencies
-        run: cd backend && yarn install
+      - name: Install ${{matrix.directory}} dependencies
+        run: cd ${{matrix.directory}} && yarn install
       
       - name: Generate Prisma Types
-        run: cd backend && yarn db:generate
+        run: cd ${{matrix.directory}} && yarn db:generate
       
       - name: Run eslint
-        run: cd backend && yarn lint
+        run: cd ${{matrix.directory}} && yarn lint
