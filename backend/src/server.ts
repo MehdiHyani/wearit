@@ -7,6 +7,7 @@ import apiRouter from './routes';
 import applyGlobalMiddlewares from './utils/applyGlobalMiddlewares';
 import deserializeUser from './middlewares/deserializeUser';
 import dotenv from 'dotenv';
+import prisma from './utils/db';
 dotenv.config();
 checkEnvVariables();
 
@@ -19,11 +20,20 @@ app.use(deserializeUser);
 
 app.use('/', apiRouter);
 
-app.listen(process.env.PORT ? process.env.PORT : 5000,
-    () => log.info(
-        'Postgres connected && Server started at '+
-        `http://localhost:${process.env.PORT ? process.env.PORT : 5000}`
-    )
-);
+async function main() {
+    try {
+        await prisma.$connect();
+        app.listen(process.env.PORT ? process.env.PORT : 5000,
+            () => log.info(
+                'Postgres connected && Server started at '+
+                `http://localhost:${process.env.PORT ? process.env.PORT : 5000}`
+            )
+        );
+    } catch (error) {
+        log.error(error, "Error connecting to db.");
+    }
+}
+
+main();
 
 export default app;
