@@ -6,6 +6,8 @@ services:
     image: postgres:latest
     environment:
       PGDATA: /var/lib/postgresql/data
+      POSTGRES_USER: your_user_here
+      POSTGRES_PASSWORD: your_password_here
     volumes:
       - ./db/data:/var/lib/postgresql/data
     ports:
@@ -13,8 +15,6 @@ services:
     networks:
       - db
     restart: unless-stopped
-    env_file:
-      - ./backend/.env
   backend:
     container_name: wearit-api
     build:
