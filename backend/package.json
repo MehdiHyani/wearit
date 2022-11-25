@@ -34,10 +34,10 @@
     "db:seed": "ts-node src/seeders/index.ts",
     "db:studio": "prisma studio --port 7777",
     "db:generate": "prisma generate",
-    "dev": "nodemon src/server.ts",
+    "dev": "prisma migrate deploy && nodemon src/server.ts",
     "build": "prisma generate && tsc",
     "seed": "yarn deploy && node build/seeders/index.js",
-    "start": "node build/server.js",
+    "start": "prisma migrate deploy && node build/server.js",
     "lint": "eslint .",
     "deploy": "prisma migrate deploy"
   },

@@ -20,13 +20,16 @@ app.use(deserializeUser);
 
 app.use('/', apiRouter);
 
+const port = process.env.PORT || 5000;
+
 async function main() {
     try {
         await prisma.$connect();
-        app.listen(process.env.PORT ? process.env.PORT : 5000,
+
+        app.listen(port,
             () => log.info(
                 'Postgres connected && Server started at '+
-                `http://localhost:${process.env.PORT ? process.env.PORT : 5000}`
+                `http://localhost:${port}`
             )
         );
     } catch (error) {

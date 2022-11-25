@@ -6,7 +6,6 @@ services:
     image: postgres:latest
     environment:
       PGDATA: /var/lib/postgresql/data
-      POSTGRES_USER: your_user_here
       POSTGRES_PASSWORD: your_password_here
     volumes:
       - ./db/data:/var/lib/postgresql/data
