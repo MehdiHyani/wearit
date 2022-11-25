@@ -19,9 +19,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    volumes:
-      - /api/node_modules
-      - ./api:/api
     ports:
       - "5000:5000"
     depends_on:

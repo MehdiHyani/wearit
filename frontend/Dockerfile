@@ -12,6 +12,4 @@ COPY . .
 
 RUN yarn build
 
-EXPOSE 3000
-
-CMD [ "yarn", "serve" ]
+CMD [ "yarn", "preview" ]
