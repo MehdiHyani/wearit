@@ -7,6 +7,7 @@ services:
     environment:
       PGDATA: /var/lib/postgresql/data
       POSTGRES_PASSWORD: your_password_here
+      POSTGRES_DB: wearit
     volumes:
       - ./db/data:/var/lib/postgresql/data
     ports:
