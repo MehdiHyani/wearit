@@ -5,7 +5,6 @@ services:
     container_name: wearit-postgresql
     image: postgres:latest
     environment:
-      POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data
     volumes:
       - ./db/data:/var/lib/postgresql/data
@@ -14,6 +13,8 @@ services:
     networks:
       - db
     restart: unless-stopped
+    env_file:
+      - ./backend/.env
   backend:
     container_name: wearit-api
     build:
