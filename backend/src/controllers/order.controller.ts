@@ -9,8 +9,8 @@ export async function createOrderController(req: Request<Record<string, never>,
     try {
         const userId = res.locals.user.id;
         const { lines, storeId } = req.body;
-        const [{ id }] = await createOrder(userId, { lines, storeId });
-        return res.status(201).json({ id });
+        const [{ ORD_ID }] = await createOrder(userId, { lines, storeId });
+        return res.status(201).json({ id: ORD_ID });
     } catch (error) {
         log.error(error);
         res.status(500).send(error);

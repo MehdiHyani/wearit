@@ -5,7 +5,7 @@ import prisma from "../utils/db";
 export function getProducts(page = 1) {
     return prisma.product.findMany({
         orderBy: {
-            lines: {
+            PRO_LINES: {
                 _count: 'desc'
             }
         },
@@ -17,7 +17,7 @@ export function getProducts(page = 1) {
 export function getFeaturedProducts() {
     return prisma.product.findMany({
         orderBy: {
-            lines: {
+            PRO_LINES: {
                 _count: 'desc'
             }
         },
@@ -28,13 +28,13 @@ export function getFeaturedProducts() {
 export function getProductsByQuery(query: string, page: number) {
     return prisma.product.findMany({
         where: {
-            name: {
+            PRO_NAME: {
                 contains: query,
                 mode: 'insensitive',
             }
         },
         orderBy: {
-            lines: {
+            PRO_LINES: {
                 _count: 'desc'
             }
         },
@@ -47,7 +47,7 @@ export function getProductsByQuery(query: string, page: number) {
 export function deleteProductById(productId: number) {
     return prisma.product.delete({
         where: {
-            id: productId
+            PRO_ID: productId
         }
     });
 }
@@ -55,15 +55,23 @@ export function deleteProductById(productId: number) {
 export function getProductById(productId: number) {
     return prisma.product.findUniqueOrThrow({
         where: {
-            id: productId
+            PRO_ID: productId
         },
         include: {
-            feedbacks: true,
-            availabilities: true,
+            PRO_FEEDBACKS: true,
+            PRO_AVAILABILITIES: true,
         }
     });
 }
 
 export function createProduct(product: CreateProductInput) {
-    return prisma.product.create({ data: product });
+    return prisma.product.create({ data: {
+        PRO_NAME: product.name,
+        PRO_PRICE: product.price,
+        PRO_IMAGES: {
+            create: {
+                IMG_URL: product.imageUrl
+            }
+        }
+    }});
 }

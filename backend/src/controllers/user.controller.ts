@@ -51,9 +51,9 @@ export async function editCurrentUserController(
     const { firstName, lastName, password } = req.body;
 
     await editUser(res.locals.user.id, {
-      firstName,
-      lastName,
-      password,
+      USR_FIRST_NAME: firstName,
+      USR_LAST_NAME: lastName,
+      USR_PASSWORD: password,
     });
     return res.sendStatus(200);
   } catch (error) {
@@ -69,10 +69,10 @@ export async function editUserController(
     const { firstName, lastName, password, role } = req.body;
 
     await editUser(parseInt(req.params.userId as string), {
-      firstName,
-      lastName,
-      password,
-      role: role as Role | undefined,
+      USR_FIRST_NAME: firstName,
+      USR_LAST_NAME: lastName,
+      USR_PASSWORD: password,
+      USR_ROLE: role as Role | undefined,
     });
 
     return res.sendStatus(200);

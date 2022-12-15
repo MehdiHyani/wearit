@@ -6,13 +6,13 @@ import { itemsPerPage } from '../utils/constants';
 
 export function getUserByEmail(email: string) {
     return prisma.user.findUniqueOrThrow({
-        where: { email }
+        where: { USR_EMAIL :email }
     });
 }
 
 export function getUserById(id: number) {
     return prisma.user.findUniqueOrThrow({
-        where: { id }
+        where: { USR_ID: id }
     });
 }
 
@@ -23,8 +23,11 @@ export function validatePassword(hash: string, candidatePassword: string) {
 export async function createUser(user: Omit<CreateUserInput, 'passwordConfirmation'>, role: 'customer'|'manager' = 'customer') {
     return await prisma.user.create({
         data: {
-            ...user,
-            role,
+            USR_EMAIL: user.email,
+            USR_FIRST_NAME: user.firstName,
+            USR_LAST_NAME: user.lastName,
+            USR_PASSWORD: user.password,
+            USR_ROLE: role,
         }
     });
 }
@@ -32,7 +35,7 @@ export async function createUser(user: Omit<CreateUserInput, 'passwordConfirmati
 export async function editUser(userId: number, data: Partial<User>) {
     return await prisma.user.update({
         where: {
-            id: userId
+            USR_ID: userId
         },
         data
     });
@@ -41,7 +44,7 @@ export async function editUser(userId: number, data: Partial<User>) {
 export async function getUsers(page = 1) {
     return prisma.user.findMany({
         orderBy: {
-            createdAt: 'desc'
+            USR_CREATED: 'desc'
         },
         skip: (page-1)*itemsPerPage,
         take: itemsPerPage

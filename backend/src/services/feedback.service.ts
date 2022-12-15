@@ -4,16 +4,16 @@ import prisma from "../utils/db";
 
 export function getFeedbacksByProduct(productId: number) {
     return prisma.feedback.findMany({
-        where: { productId },
+        where: { PRO_ID: productId },
         select: {
-            feedback: true,
-            id: true,
-            createdAt: true,
-            user: {
+            FDB_COMMENT: true,
+            FDB_ID: true,
+            FDB_CREATED: true,
+            USER: {
                 select: {
-                    id: true,
-                    firstName: true,
-                    lastName: true,
+                    USR_ID: true,
+                    USR_FIRST_NAME: true,
+                    USR_LAST_NAME: true,
                 }
             }
         }
@@ -21,5 +21,9 @@ export function getFeedbacksByProduct(productId: number) {
 }
 
 export function createFeedback(feedback: CreateFeedbackInput, userId: number) {
-    return prisma.feedback.create({ data: {...feedback, userId} });
+    return prisma.feedback.create({ data: {
+        FDB_COMMENT: feedback.feedback,
+        PRO_ID: feedback.productId,
+        USR_ID: userId,
+    }});
 }

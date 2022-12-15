@@ -20,7 +20,7 @@ export async function loginController(
         return res.status(403).send(message);
     }
 
-    const isValid = await validatePassword(user.password, password);
+    const isValid = await validatePassword(user.USR_PASSWORD, password);
 
     if (!isValid) {
         return res.send(message);
@@ -28,7 +28,7 @@ export async function loginController(
 
     const accessToken = signAccessToken(user);
 
-    const refreshToken = await signRefreshToken(user.id);
+    const refreshToken = await signRefreshToken(user.USR_ID);
 
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
@@ -61,11 +61,11 @@ export async function refreshTokenController(req: Request, res: Response) {
 
     const session = await getSessionById(decoded.session);
 
-    if (!session || !session.valid) {
+    if (!session || !session.SES_VALID) {
         return res.status(401).send(errorMessage);
     }
 
-    const user = await getUserById(session.userId);
+    const user = await getUserById(session.USR_ID);
 
     if (!user) {
         return res.status(401).send(errorMessage);
