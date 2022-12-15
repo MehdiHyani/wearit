@@ -20,7 +20,7 @@ export async function createFeedbackController(req: Request<Record<string, never
     try {
         const { body: { feedback, productId } } = req;
         const decodedUser = res.locals.user as Partial<User>;
-        const userId = decodedUser.id ? decodedUser.id : 0;
+        const userId = decodedUser.USR_ID ? decodedUser.USR_ID : 0;
         await createFeedback({ feedback, productId }, userId);
         return res.sendStatus(201);
     } catch (error) {

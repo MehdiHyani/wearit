@@ -10,42 +10,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Image {
+  IMG_ID Int @id @default(autoincrement())
+  PRODUCT Product @relation(fields: [PRO_ID], references: [PRO_ID], onDelete: Cascade, onUpdate: Cascade)
+  PRO_ID Int
+  IMG_URL String
+  IMG_CREATED DateTime @default(now())
+  IMG_UPDATED DateTime @updatedAt
+}
+
 model Product {
-  id Int @id @default(autoincrement())
-  name String
-  price Float
-  imageUrl String
-  availabilities Availability[]
-  lines Line[]
-  feedbacks Feedback[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  PRO_ID Int @id @default(autoincrement())
+  PRO_NAME String
+  PRO_PRICE Float
+  PRO_IMAGES Image[]
+  PRO_AVAILABILITIES Availability[]
+  PRO_LINES Line[]
+  PRO_FEEDBACKS Feedback[]
+  PRO_CREATED DateTime @default(now())
+  PRO_UPDATED DateTime @updatedAt
 }
 
 model Availability {
-  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  storeId Int
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  productId Int
-  quantityOnHand Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  STORE Store @relation(fields: [STR_ID], references: [STR_ID], onDelete: Cascade, onUpdate: Cascade)
+  STR_ID Int
+  PRODUCT Product @relation(fields: [PRO_ID], references: [PRO_ID], onDelete: Cascade, onUpdate: Cascade)
+  PRO_ID Int
+  AV_QUANTITY Int
+  AV_CREATED DateTime @default(now())
+  AV_UPDATED DateTime @updatedAt
 
-  @@id([storeId, productId])
+  @@id([STR_ID, PRO_ID])
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  firstName String
-  lastName String
-  password String
-  role Role @default(customer)
-  orders Order[]
-  feedbacks Feedback[]
-  sessions Session[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  USR_ID Int @id @default(autoincrement())
+  USR_EMAIL String @unique
+  USR_FIRST_NAME String
+  USR_LAST_NAME String
+  USR_PASSWORD String
+  USR_ROLE Role @default(customer)
+  USR_ORDERS Order[]
+  USR_FEEDBACKS Feedback[]
+  USR_SESSIONS Session[]
+  USR_CREATED DateTime @default(now())
+  USR_UPDATED DateTime @updatedAt
 }
 
 enum Role {
@@ -54,27 +63,27 @@ enum Role {
 }
 
 model Line {
-  lineNumber Int
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orderId Int
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  productId Int
-  price Float
-  quantity Int
-  @@id([lineNumber, orderId])
+  LINE_NUMBER Int
+  ORDER Order @relation(fields: [ORD_ID], references: [ORD_ID], onDelete: Cascade, onUpdate: Cascade)
+  ORD_ID Int
+  PRODUCT Product @relation(fields: [PRO_ID], references: [PRO_ID], onDelete: Cascade, onUpdate: Cascade)
+  PRO_ID Int
+  PRO_PRICE Float
+  PRO_QUANTITY Int
+  @@id([LINE_NUMBER, ORD_ID])
 }
 
 model Order {
-  id Int @id @default(autoincrement())
-  status OrderStatus @default(pending)
-  total Float
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId Int
-  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  storeId Int
-  lines Line[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  ORD_ID Int @id @default(autoincrement())
+  ORD_STATUS OrderStatus @default(pending)
+  ORD_TOTAL Float
+  USER User @relation(fields: [USR_ID], references: [USR_ID], onDelete: Cascade, onUpdate: Cascade)
+  USR_ID Int
+  STORE Store @relation(fields: [STR_ID], references: [STR_ID], onDelete: Cascade, onUpdate: Cascade)
+  STR_ID Int
+  ORD_LINES Line[]
+  ORD_CREATED DateTime @default(now())
+  ORD_UPDATED DateTime @updatedAt
 }
 
 enum OrderStatus {
@@ -85,34 +94,36 @@ enum OrderStatus {
 }
 
 model Store {
-  id Int @id @default(autoincrement())
-  name String
-  latitude Float
-  longitutde Float
-  openingHours String
-  phoneNumber String
-  orders Order[]
-  availabilities Availability[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  STR_ID Int @id @default(autoincrement())
+  STR_NAME String
+  STR_LATITUDE Float
+  STR_LONGITUDE Float
+  STR_HOURS String
+  STR_PHONE String
+  STR_ORDERS Order[]
+  STR_AVAILABILITIES Availability[]
+  STR_CREATED DateTime @default(now())
+  STR_UPDATED DateTime @updatedAt
+
+  @@unique([STR_LATITUDE, STR_LONGITUDE])
 }
 
 model Feedback {
-  id Int @id @default(autoincrement())
-  feedback String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId Int
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  productId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  FDB_ID Int @id @default(autoincrement())
+  FDB_COMMENT String
+  USER User @relation(fields: [USR_ID], references: [USR_ID], onDelete: Cascade, onUpdate: Cascade)
+  USR_ID Int
+  PRODUCT Product @relation(fields: [PRO_ID], references: [PRO_ID], onDelete: Cascade, onUpdate: Cascade)
+  PRO_ID Int
+  FDB_CREATED DateTime @default(now())
+  FDB_UPDATED DateTime @updatedAt
 }
 
 model Session {
-  id Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId Int
-  valid Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  SES_ID Int @id @default(autoincrement())
+  USER User @relation(fields: [USR_ID], references: [USR_ID], onDelete: Cascade, onUpdate: Cascade)
+  USR_ID Int
+  SES_VALID Boolean @default(true)
+  SES_CREATED DateTime @default(now())
+  SES_UPDATED DateTime @updatedAt
 }

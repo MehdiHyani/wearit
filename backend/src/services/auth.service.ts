@@ -25,7 +25,7 @@ export async function signRefreshToken(userId: number) {
 
     const refreshToken = signJwt(
         {
-            session: session.id,
+            session: session.SES_ID,
         },
         Buffer.from(process.env.REFRESH_PRIVATE_KEY ? process.env.REFRESH_PRIVATE_KEY : '', 'base64').toString('ascii'),
         {
@@ -39,7 +39,7 @@ export async function signRefreshToken(userId: number) {
 export function getSessionById(sessionId: number) {
     return prisma.session.findUnique({
         where: {
-            id: sessionId
+            SES_ID: sessionId
         }
     });
 }

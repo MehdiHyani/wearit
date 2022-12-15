@@ -11,21 +11,24 @@ export function getAvailabilities(page = 1) {
 
 export function getAvailabilityByProduct(productId: number) {
     return prisma.availability.findMany({
-        where: { productId }
+        where: { PRO_ID: productId }
     });
 }
 
 export function createAvailability(availability:createAvailabilityInput) {
-    return prisma.availability.create({ data: availability });
+    return prisma.availability.create({ data: {
+        AV_QUANTITY: availability.quantityOnHand,
+        PRO_ID: availability.productId,
+        STR_ID: availability.storeId,
+    } });
 }
 
 export function deleteAvailability(productId: number, storeId: number) {
     return prisma.availability.delete({
         where: {
-            // eslint-disable-next-line camelcase
-            storeId_productId: {
-                productId,
-                storeId
+            STR_ID_PRO_ID: {
+                PRO_ID: productId,
+                STR_ID: storeId
             }
         }
     });
@@ -34,12 +37,11 @@ export function deleteAvailability(productId: number, storeId: number) {
 export function updateAvailability(productId: number, storeId: number, quantityOnHand: number) {
     return prisma.availability.update({
         where: {
-            // eslint-disable-next-line camelcase
-            storeId_productId: {
-                productId,
-                storeId
+            STR_ID_PRO_ID: {
+                PRO_ID: productId,
+                STR_ID: storeId
             }
         },
-        data: { quantityOnHand }
+        data: { AV_QUANTITY :quantityOnHand }
     });
 }

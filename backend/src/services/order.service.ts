@@ -6,7 +6,7 @@ import prisma from "../utils/db";
 export function getOrders(page = 1) {
   return prisma.order.findMany({
     orderBy: {
-      createdAt: "desc",
+      ORD_CREATED: "desc",
     },
     skip: (page - 1) * itemsPerPage,
     take: itemsPerPage,
@@ -16,17 +16,17 @@ export function getOrders(page = 1) {
 export async function confirmOrder(orderId: number) {
   const order = await prisma.order.findUniqueOrThrow({
     where: {
-      id: orderId
+      ORD_ID: orderId
     }
   });
 
-  if(order.status !== OrderStatus.pending)
+  if(order.ORD_STATUS !== OrderStatus.pending)
     throw new Error("You cannot cancel this order");
 
   return await prisma.order.update({
-    where: { id: orderId },
+    where: { ORD_ID: orderId },
     data: {
-      status: OrderStatus.confirmed,
+      ORD_STATUS: OrderStatus.confirmed,
     },
   });
 }
@@ -34,17 +34,17 @@ export async function confirmOrder(orderId: number) {
 export async function completeOrder(orderId: number) {
   const order = await prisma.order.findUniqueOrThrow({
     where: {
-      id: orderId
+      ORD_ID: orderId
     }
   });
 
-  if(order.status !== OrderStatus.confirmed)
+  if(order.ORD_STATUS !== OrderStatus.confirmed)
     throw new Error("You cannot complete this order");
 
   return await prisma.order.update({
-    where: { id: orderId },
+    where: { ORD_ID: orderId },
     data: {
-      status: OrderStatus.completed,
+      ORD_STATUS: OrderStatus.completed,
     },
   });
 }
@@ -53,19 +53,19 @@ export async function cancelOrder(orderId: number) {
 
   const order = await prisma.order.findUniqueOrThrow({
     where: {
-      id: orderId
+      ORD_ID: orderId
     }
   });
 
-  if(order.status !== OrderStatus.pending)
+  if(order.ORD_STATUS !== OrderStatus.pending)
     throw new Error("You cannot cancel this order");
 
   return await prisma.order.update({
     where: {
-      id: orderId
+      ORD_ID: orderId
     },
     data: {
-      status: OrderStatus.canceled,
+      ORD_STATUS: OrderStatus.canceled,
     },
   });
 }
@@ -73,15 +73,15 @@ export async function cancelOrder(orderId: number) {
 export function getOrderById(orderId: number) {
   return prisma.order.findUniqueOrThrow({
     where: {
-      id: orderId,
+      ORD_ID: orderId,
     },
     select: {
-      lines: true,
-      user: {
+      ORD_LINES: true,
+      USER: {
         select: {
-          firstName: true,
-          lastName: true,
-          id: true,
+          USR_FIRST_NAME: true,
+          USR_LAST_NAME: true,
+          USR_ID: true,
         }
       },
     },
@@ -99,23 +99,23 @@ export async function createOrder(userId: number, data: createOrderInput) {
         where: {
           AND: [
             {
-              quantityOnHand: {
+              AV_QUANTITY: {
                 gte: line.quantity,
               },
             },
             {
-              productId: {
+              PRO_ID: {
                 equals: line.productId,
               },
             },
             {
-              storeId: {
+              STR_ID: {
                 equals: data.storeId,
               },
             },
             {
-                product: {
-                    price: {
+                PRODUCT: {
+                    PRO_PRICE: {
                         equals: line.price
                     }
                 }
@@ -136,19 +136,19 @@ export async function createOrder(userId: number, data: createOrderInput) {
   return await prisma.$transaction([
     prisma.order.create({
       data: {
-        userId,
-        storeId: data.storeId,
-        total: data.lines.reduce(
+        USR_ID :userId,
+        STR_ID: data.storeId,
+        ORD_TOTAL: data.lines.reduce(
           (total, currentLine) => total + currentLine.price,
           0
         ),
-        lines: {
+        ORD_LINES: {
           createMany: {
             data: data.lines.map((line, index) => ({
-              lineNumber: index + 1,
-              price: line.price,
-              productId: line.productId,
-              quantity: line.quantity,
+              LINE_NUMBER: index + 1,
+              PRO_PRICE: line.price,
+              PRO_ID: line.productId,
+              PRO_QUANTITY: line.quantity,
             })),
           },
         },
@@ -157,14 +157,13 @@ export async function createOrder(userId: number, data: createOrderInput) {
     ...data.lines.map(line => {
       return prisma.availability.update({
         where: {
-          // eslint-disable-next-line camelcase
-          storeId_productId: {
-            productId: line.productId,
-            storeId: data.storeId,
+          STR_ID_PRO_ID: {
+            PRO_ID: line.productId,
+            STR_ID: data.storeId,
           },
         },
         data: {
-          quantityOnHand: {
+          AV_QUANTITY: {
             decrement: line.quantity,
           },
         },

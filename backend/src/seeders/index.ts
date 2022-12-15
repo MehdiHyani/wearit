@@ -1,4 +1,3 @@
-import { createUser } from "../services/user.service";
 import prisma from "../utils/db";
 import log from "../utils/logger";
 import { users, stores, products } from './seedData';
@@ -7,18 +6,18 @@ import { faker } from '@faker-js/faker';
 async function seedUsers() {
     try {
         await prisma.user.deleteMany();
-        await Promise.all(users.map(async user => {
-            const { id } = await createUser({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                password: user.password,
-            }, 'manager');
-            return id;
-        }));
+        await prisma.user.createMany({
+            data: users.map(us => ({
+                USR_EMAIL: us.email,
+                USR_FIRST_NAME: us.firstName,
+                USR_LAST_NAME: us.lastName,
+                USR_PASSWORD: us.password,
+            }))
+        });
         log.info("Seeded users");
     } catch (error) {
-        log.info("Error seeding users");
+        log.error("Error seeding users");
+        throw error;
     }
 }
 
@@ -26,23 +25,42 @@ async function seedStores() {
     try {
         await prisma.store.deleteMany();
         await prisma.store.createMany({
-            data: stores,
+            data: stores.map(st => ({
+                STR_HOURS: st.openingHours,
+                STR_LATITUDE: st.latitude,
+                STR_LONGITUDE: st.longitude,
+                STR_NAME: st.name,
+                STR_PHONE: st.phoneNumber,
+            })),
         });
         log.info("Seeded stores");
     } catch (error) {
-        log.info("Error seeding stores");
+        log.error("Error seeding stores");
+        throw error;
     }
 }
 
 async function seedProducts() {
     try {
         await prisma.product.deleteMany();
-        await prisma.product.createMany({
-            data: products,
-        });
+
+        await Promise.all(products.map(async p => {
+            await prisma.product.create({
+                data: {
+                    PRO_NAME: p.title,
+                    PRO_PRICE: p.price,
+                    PRO_IMAGES: {
+                        create: {
+                            IMG_URL: p.image
+                        }
+                    }
+                }
+            });
+        }));
         log.info("Seeded products");
     } catch (error) {
-        log.info("Error seeding products");
+        log.error("Error seeding products");
+        throw error;
     }
 }
 
@@ -56,16 +74,17 @@ async function seedAvailabilities() {
                 if(parseInt(faker.random.numeric(3)) % 2)
                     await prisma.availability.create({
                         data: {
-                            quantityOnHand: parseInt(faker.random.numeric(2)),
-                            storeId: store.id,
-                            productId: product.id,
+                            AV_QUANTITY: parseInt(faker.random.numeric(2)),
+                            STR_ID: store.STR_ID,
+                            PRO_ID: product.PRO_ID,
                         }
                     });
             }));
         }));
         log.info("Seeded availabilities");
     } catch (error) {
-        log.info("Error seeding availabilities");
+        log.error("Error seeding availabilities");
+        throw error;
     }
 }
 
@@ -78,16 +97,17 @@ async function seedFeedbacks() {
             await Promise.all(users.map(async user => {
                 await prisma.feedback.create({
                     data: {
-                        feedback: faker.lorem.sentence(),
-                        userId: user.id,
-                        productId: product.id,
+                        FDB_COMMENT: faker.lorem.sentence(),
+                        USR_ID: user.USR_ID,
+                        PRO_ID: product.PRO_ID,
                     }
                 });
             }));
         }));
         log.info("Seeded feedbacks");
     } catch (error) {
-        log.info("Error seeding feedbacks");
+        log.error("Error seeding feedbacks");
+        throw error;
     }
 }
 
@@ -100,6 +120,7 @@ async function main() {
         await seedFeedbacks();
     } catch (error) {
         log.error(error);
+        process.exit(1);
     }
 }
 
