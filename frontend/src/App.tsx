@@ -3,7 +3,7 @@ import Landing from "./pages/Landing";
 
 const App = () => {
   return (
-    <main className="grid grid-cols-16 gap-6 scroll-smooth bg-1stcolor overflow-x-hidden h-screen w-screen">
+    <main className="font-sans grid grid-cols-16 gap-6 scroll-smooth bg-1stcolor overflow-x-hidden h-screen w-screen">
       <Landing />
     </main>
   );

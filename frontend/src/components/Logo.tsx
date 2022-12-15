@@ -10,7 +10,7 @@ interface LogoProps {
 const Logo = ({width = 160, height = 150, style}: LogoProps) => {
   return (
     <div className={style}>
-        <img src={logo} alt="wearit logo" width={width} height={height} />
+        <img className='inline-block' src={logo} alt="wearit logo" width={width} height={height} />
     </div>
   )
 }
