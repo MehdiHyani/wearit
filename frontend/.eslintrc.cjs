@@ -25,6 +25,10 @@ module.exports = {
         indent: ['error', 4],
         '@typescript-eslint/indent': ['error', 4],
         '@typescript-eslint/explicit-function-return-type': 'off',
-        'space-before-function-paren': ['error', 'never']
+        'space-before-function-paren': ['error', 'never'],
+        '@typescript-eslint/space-before-function-paren': ['error', 'never'],
+        '@typescript-eslint/semi': ['error', 'always'],
+        '@typescript-eslint/strict-boolean-expressions': 'off',
+        semi: ['error', 'always']
     }
-}
+};
