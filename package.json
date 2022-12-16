@@ -3,5 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "BR4INL3SS <hyanimehdi115@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "postinstall": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "husky": "^8.0.2"
+  }
 }
