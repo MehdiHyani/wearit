@@ -3,8 +3,12 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { setCredentials } from './app/auth/authSlice';
 import { useAppDispatch } from './app/hooks';
 import { useLazyGetCurrentUserQuery } from './app/user/userApiSlice';
+import RequireAuth from './components/RequireAuth';
+import RequireManager from './components/RequireManager';
+import Forbidden from './pages/Forbidden';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
+import Manager from './pages/Manager';
 import NotFound from './pages/NotFound';
 
 const App = () => {
@@ -32,6 +36,14 @@ const App = () => {
             : <Routes>
                 <Route index element={<Landing />} />
                 <Route path='login' element={<Login />} />
+                <Route element={<RequireAuth />}>
+                    <Route path='profile' />
+                    <Route element={<RequireManager />}>
+                        <Route path='manager' element={<Manager />} />
+                    </Route>
+                    <Route />
+                </Route>
+                <Route path="403" element={<Forbidden />} />
                 <Route path="404" element={<NotFound />} />
                 <Route path='*' element={<Navigate to='/404' replace />} />
             </Routes>

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { User } from '../../utils/types';
 import { RootState } from '../store';
 
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        user: null
+        user: null as User | null
     },
     reducers: {
         setCredentials: (state, action) => {
