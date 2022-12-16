@@ -1,12 +1,16 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../app/store';
 
 const Providers = ({ children }: { children: JSX.Element }) => {
     return (
         <BrowserRouter>
-            {children}
+            <Provider store={store}>
+                {children}
+            </Provider>
         </BrowserRouter>
-    )
-}
+    );
+};
 
-export default Providers
+export default Providers;
