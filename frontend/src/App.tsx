@@ -20,7 +20,7 @@ const App = () => {
         try {
             const user = await getCurrentUser({}, false).unwrap();
             dispatch(setCredentials({ user }));
-        } catch (error) { } finally {
+        } catch (error) { console.clear(); } finally {
             setLoading(false);
         }
     }
