@@ -5,19 +5,52 @@ interface ProductProps {
     desc: string
     price: number
     images: string[]
-};
+}
 
-const Card = ({ sample, style }: { sample: ProductProps, style?: string }) => {
+interface CardProps {
+    product: ProductProps
+    generalStyle: string
+    titleStyle: string
+    descColor: string
+    btnStyle: string
+    priceStyle: string
+}
+
+const Card = ({
+    product,
+    generalStyle,
+    titleStyle,
+    descColor,
+    btnStyle,
+    priceStyle
+}: CardProps) => {
     return (
-        <div className={'rounded-md bg-tertiary text-primary w-[40rem] h-[25rem] pl-[1rem] grid grid-cols-2 grid-rows-4 ' + (style ?? '')}>
-            <div className="col-start-1 col-span-1 text-3xl font-bold max-w-xs">{sample.title}</div>
-            <div className="col-start-1 col-span-1 max-w-xs opacity-50">{sample.desc}</div>
-            <div className="col-start-1 col-span-1 max-w-xs text-primary text-[2rem]">{sample.price} <span className='text-secondary'>MAD</span></div>
+        <div
+            className={
+                'pl-2 rounded-md bg-tertiary text-primary grid grid-cols-2 grid-rows-4 bg-gradient-to-r ' +
+        generalStyle
+            }
+        >
+            <div
+                className={`col-start-1 col-span-1 font-bold max-w-xs ${titleStyle}`}
+            >
+                {product.title}
+            </div>
+            <div
+                className={`col-start-1 col-span-1 max-w-xs opacity-50 ${descColor}`}
+            >
+                {product.desc}
+            </div>
+            <div className={`col-start-1 col-span-1 max-w-xs text-primary ${priceStyle}`}>
+                {product.price} <span className="text-secondary">MAD</span>
+            </div>
             <div className="max-w-xs col-start-1 col-span-1 max-w-xs">
-                <button className="h-2/3 w-2/3 rounded-3xl text-tertiary text-3xl bg-gradient-to-r from-[#43CBFF] to-[#9708CC]">Order Now</button>
+                <button className={' text-tertiary bg-gradient-to-r ' + btnStyle}>
+          Order Now
+                </button>
             </div>
             <div className="col-start-2 row-start-1 row-span-4 self-center justify-self-center">
-                <img src={sample.images[0]} alt={sample.title} />
+                <img src={product.images[0]} alt={product.title} />
             </div>
         </div>
     );
