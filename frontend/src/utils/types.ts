@@ -16,3 +16,10 @@ export interface User {
 export interface LoginResult {
     user: User
 };
+
+export interface SignupBody {
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  }
