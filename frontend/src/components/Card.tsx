@@ -27,7 +27,7 @@ const Card = ({
     return (
         <div
             className={
-                'pl-2 rounded-md bg-tertiary text-primary grid grid-cols-2 grid-rows-4 bg-gradient-to-r ' +
+                'pl-2 rounded-md text-primary grid grid-cols-2 grid-rows-4 ' +
         generalStyle
             }
         >
