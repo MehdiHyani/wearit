@@ -1,26 +1,10 @@
 import React from 'react';
-
-interface ProductProps {
-    title: string
-    desc: string
-    price: number
-    images: string[]
-}
-
-interface CardProps {
-    product: ProductProps
-    generalStyle: string
-    titleStyle: string
-    descColor: string
-    btnStyle: string
-    priceStyle: string
-}
+import { CardProps } from '../utils/types';
 
 const Card = ({
     product,
     generalStyle,
     titleStyle,
-    descColor,
     btnStyle,
     priceStyle
 }: CardProps) => {
@@ -34,15 +18,10 @@ const Card = ({
             <div
                 className={`col-start-1 col-span-1 font-bold max-w-xs ${titleStyle}`}
             >
-                {product.title}
-            </div>
-            <div
-                className={`col-start-1 col-span-1 max-w-xs opacity-50 ${descColor}`}
-            >
-                {product.desc}
+                {product.PRO_NAME}
             </div>
             <div className={`col-start-1 col-span-1 max-w-xs text-primary ${priceStyle}`}>
-                {product.price} <span className="text-secondary">MAD</span>
+                {product.PRO_PRICE} <span className="text-secondary">MAD</span>
             </div>
             <div className="max-w-xs col-start-1 col-span-1 max-w-xs">
                 <button className={' text-tertiary bg-gradient-to-r ' + btnStyle}>
@@ -50,7 +29,7 @@ const Card = ({
                 </button>
             </div>
             <div className="col-start-2 row-start-1 row-span-4 self-center justify-self-center">
-                <img src={product.images[0]} alt={product.title} />
+                <img src={product.PRO_IMAGES[0].IMG_URL} alt={product.PRO_NAME} />
             </div>
         </div>
     );

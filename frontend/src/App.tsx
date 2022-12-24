@@ -10,6 +10,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Manager from './pages/Manager';
 import NotFound from './pages/NotFound';
+import Products from './pages/Products';
 
 const App = () => {
     const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ const App = () => {
             ? <h1>Loading...</h1>
             : <Routes>
                 <Route index element={<Landing />} />
+                <Route path='products' element={< Products />} />
                 <Route path='login' element={<Login />} />
                 <Route element={<RequireAuth />}>
                     <Route path='profile' />
