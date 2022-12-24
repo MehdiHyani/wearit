@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
 import logo from '../assets/logo.png';
-import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/Ai';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectCurrentUser, logout as logoutDispatcher } from '../app/auth/authSlice';
 import { useLogoutMutation } from '../app/auth/authApiSlice';
-import { useNavigate } from 'react-router-dom';
 import { useGetStoresQuery } from '../app/store/storeApiSlice';
 
 const Navbar = () => {
@@ -21,7 +21,7 @@ const Navbar = () => {
         e.preventDefault();
     };
 
-    const handleLogout = async() => {
+    const handleLogout = async () => {
         try {
             setOpen(!open);
             await logout({});
@@ -68,10 +68,10 @@ const Navbar = () => {
                         </div>
                         : <div className="centered gap-5">
                             <button onClick={() => navigate('/signup')} className="hover:text-black inline-block px-6 py-2.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out">
-                Sign Up
+                                Sign Up
                             </button>
                             <button onClick={() => navigate('/login')} className="hover:text-black inline-block px-6 py-2.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out">
-                Log in
+                                Log in
                             </button>
                         </div>}
 
