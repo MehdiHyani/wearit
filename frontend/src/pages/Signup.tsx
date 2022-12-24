@@ -1,45 +1,44 @@
-/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/jsx-no-comment-textnodes */
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import logo from '../assets/logo.png';
 import { string, z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate, Link } from 'react-router-dom';
-import { selectCurrentUser, setCredentials } from '../app/auth/authSlice';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { useLoginMutation } from '../app/auth/authApiSlice';
-
-import { LoginBody } from '../utils/types';
+import { Link, useNavigate } from 'react-router-dom';
+import { selectCurrentUser } from '../app/auth/authSlice';
+import { useAppSelector } from '../app/hooks';
+import { SignupBody } from '../utils/types';
+import { useSignupMutation } from '../app/user/userApiSlice';
 
 const schema = z.object({
+    firstName: string().min(2),
+    lastName: string().min(2),
     email: string().email(),
     password: string().min(8)
 });
 
-const Login = () => {
-    const dispatch = useAppDispatch();
-    const [login] = useLoginMutation();
+const Signup = () => {
+    const [signup] = useSignupMutation();
     const navigate = useNavigate();
     const user = useAppSelector(selectCurrentUser);
-    const [error, setError] = useState('');
 
     useEffect(() => {
         if (user) { navigate('/'); }
     }, []);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginBody>(({ resolver: zodResolver(schema) }));
-    const onSubmit = async(data: LoginBody) => {
+    const { register, handleSubmit, formState: { errors } } = useForm<SignupBody>(({ resolver: zodResolver(schema) }));
+    const onSubmit = async(data: SignupBody) => {
         try {
-            const user = await login(data).unwrap();
-            dispatch(setCredentials(user));
-            navigate('/');
+            await signup(data);
+            navigate('/login');
         } catch (error) {
-            setError('Wrong credentials!');
+            console.log(error);
         }
     };
 
     return (
+
         <div className="grid grid-cols-1 md:grid-cols-2">
 
             <div>
@@ -50,10 +49,21 @@ const Login = () => {
 
                 <div className="flex flex-col centered">
 
-                    <div className="flex flex-row text-3xl font-bold font-chivo"><h1 className='underline'>Welcome</h1><h1 className='indent-1'>Back!</h1></div>
-                    <p className='font-chivo text-gray-900 dark:text-gray-300'>Where your requests are our commands</p>
+                    <div className="flex flex-row text-3xl font-bold font-chivo"><h1 className='underline'>Create</h1><h1 className='indent-1'>&nbsp;your Account</h1></div>
+                    <p className='font-chivo text-gray-900 dark:text-gray-300'>Start shopping now!</p>
 
-                    <form className='mx-auto mt-10 gap-5' onSubmit={handleSubmit(onSubmit)}>
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                    <form className='mt-10 gap-5' onSubmit={handleSubmit(onSubmit)}>
+
+                        <label className='font-medium'>First Name:</label>
+                        <input {...register('firstName', { required: 'Required first name' })}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" placeholder="First name"/>
+                        <p className='mt-2 mb-5 text-red-500 text-xs'>{errors.firstName?.message}</p>
+
+                        <label className='font-medium'>Last Name:</label>
+                        <input {...register('lastName', { required: 'Required last name' })}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" placeholder="Second name"/>
+                        <p className='mt-2 mb-5 text-red-500 text-xs'>{errors.lastName?.message}</p>
 
                         <label className='font-medium'>Email:</label>
                         <input {...register('email', { required: 'Required E-mail' })}
@@ -63,36 +73,26 @@ const Login = () => {
                         <label className='font-medium'>Password:</label>
                         <input {...register('password', { required: 'Required Password', minLength: { value: 4, message: 'Minimum length is 4' } })}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="**********"/>
-                        <p className='mt-2 mb-5 text-red-500 text-xs'>{errors.password?.message}</p>
-                        {error ? <p className='mt-2 mb-5 text-red-500 text-xs centered'>{error}</p> : <></> }
+                        <p className='mt-2  text-red-500 text-xs'>{errors.password?.message}</p>
 
-                        <div className="mt-4 flex justify-between">
-
-                            <div className="flex items-center">
-                                <input id="link-checkbox" type="checkbox" value="" className="cursor-pointer accent-orange-500 w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                <label className="font-chivo ml-2 text-sm font-bold">Remember Me</label>
-                            </div>
-
-                            <a className="font-chivo inline-block align-baseline font-bold text-sm text-bold hover:text-orange-500" href="#">Forgot Password?</a>
-
+                        <div className="centered mt-3 gap-2">
+                            <p className='font-chivo text-l font-medium text-gray-900 dark:text-gray-300'>Already a member?</p>
+                            <Link className="font-chivo text-l font-bold text-bold hover:text-orange-500" to="/login">Log in</Link>
                         </div>
 
-                        <button type='submit' className="mt-5 relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                        <button type='submit' className="mt-10 relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                             <span className="w-[520px] relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                  Sign In
+                  Sign Up
                             </span>
                         </button>
 
                     </form>
 
-                    <button className="relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                    <button className=" relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                         <span className="w-[520px] relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                  Sign in with Google
+                  Sign Up with Google
                         </span>
                     </button>
-
-                    <p className='font-chivo text-xl font-medium text-gray-900 dark:text-gray-300 mt-10'>Don't have an account?</p>
-                    <Link className="font-chivo text-xl font-bold text-bold hover:text-orange-500" to='/signup'>Sign Up</Link>
 
                 </div>
 
@@ -107,4 +107,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;

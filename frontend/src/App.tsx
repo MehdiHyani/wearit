@@ -11,6 +11,8 @@ import Login from './pages/Login';
 import Manager from './pages/Manager';
 import NotFound from './pages/NotFound';
 import Products from './pages/Products';
+import Signup from './pages/Signup';
+import Navbar from './components/Navbar';
 
 const App = () => {
     const dispatch = useAppDispatch();
@@ -38,12 +40,16 @@ const App = () => {
                 <Route index element={<Landing />} />
                 <Route path='products' element={< Products />} />
                 <Route path='login' element={<Login />} />
-                <Route element={<RequireAuth />}>
-                    <Route path='profile' />
-                    <Route element={<RequireManager />}>
-                        <Route path='manager' element={<Manager />} />
+                <Route path='signup' element={<Signup />} />
+                <Route element={<Navbar />}>
+                    <Route index element={<Landing />} />
+                    <Route element={<RequireAuth />}>
+                        <Route path='profile' />
+                        <Route element={<RequireManager />}>
+                            <Route path='manager' element={<Manager />} />
+                        </Route>
+                        <Route />
                     </Route>
-                    <Route />
                 </Route>
                 <Route path="403" element={<Forbidden />} />
                 <Route path="404" element={<NotFound />} />
