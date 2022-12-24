@@ -57,7 +57,6 @@ export interface CardProps {
 export type CartItem = Product & {
     quantity: number
 };
-=======
 export interface SignupBody {
     firstName: string,
     lastName: string,
