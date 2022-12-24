@@ -11,7 +11,7 @@ function applyGlobalMiddlewares(expressApp: Express) {
     expressApp.use(json());
     expressApp.use(urlencoded({ extended: true }));
     expressApp.use(cors({
-        origin: process.env.CLIENT_URL ?? '*',
+        origin: process.env.NODE_ENV === 'production' ? process.env.CLIENT_URL : '*',
         credentials: true,
     }));
     expressApp.use(helmet());
