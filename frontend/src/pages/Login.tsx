@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import logo from '../assets/logo.png'
-import {string, z} from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import React, {useEffect, useState} from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import logo from '../assets/logo.png';
+import {string, z} from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import { selectCurrentUser, setCredentials } from '../app/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useLoginMutation } from '../app/auth/authApiSlice';
 import { Link } from 'react-router-dom';
-import { LoginBody } from '../utils/types'
+import { LoginBody } from '../utils/types';
 
 
 
