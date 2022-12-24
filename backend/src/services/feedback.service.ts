@@ -15,7 +15,7 @@ export function getFeedbacksByProduct(productId: number) {
                     USR_FIRST_NAME: true,
                     USR_LAST_NAME: true,
                 }
-            }
+            },
         }
     });
 }
