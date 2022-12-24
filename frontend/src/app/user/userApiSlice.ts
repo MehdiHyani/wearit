@@ -10,9 +10,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
             query: (signupBody: SignupBody) => ({
                 url: '/users',
                 method: 'POST',
-                body: {...signupBody, passwordConfirmation: signupBody.password}
+                body: { ...signupBody, passwordConfirmation: signupBody.password }
             })
-        }),
+        })
     })
 });
 

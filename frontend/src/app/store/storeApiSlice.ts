@@ -5,7 +5,7 @@ export const storeApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getStores: builder.query<Store[], {}>({
             query: () => ({ url: '/stores' })
-        }),
+        })
     })
 });
 
