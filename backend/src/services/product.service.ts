@@ -1,3 +1,4 @@
+import { Product } from "@prisma/client";
 import { CreateProductInput } from "../schema/product.schema";
 import { itemsPerPage } from "../utils/constants";
 import prisma from "../utils/db";
@@ -16,6 +17,10 @@ export function getProducts(page = 1) {
 
 export function getFeaturedProducts() {
     return prisma.product.findMany({
+        include: {
+            PRO_IMAGES: true,
+            PRO_FEEDBACKS: true,
+        },
         orderBy: {
             PRO_LINES: {
                 _count: 'desc'
@@ -25,7 +30,7 @@ export function getFeaturedProducts() {
     });
 }
 
-export function getProductsByQuery(query: string, page: number) {
+export function getProductsByQuery(query: string, page = 1) {
     return prisma.product.findMany({
         where: {
             PRO_NAME: {
@@ -59,7 +64,7 @@ export function getProductById(productId: number) {
         },
         include: {
             PRO_FEEDBACKS: true,
-            PRO_AVAILABILITIES: true,
+            PRO_IMAGES: true,
         }
     });
 }
@@ -68,10 +73,20 @@ export function createProduct(product: CreateProductInput) {
     return prisma.product.create({ data: {
         PRO_NAME: product.name,
         PRO_PRICE: product.price,
+        PRO_AVAILABLE_QUANTITY: product.availableQuantity,
         PRO_IMAGES: {
-            create: {
-                IMG_URL: product.imageUrl
+            createMany: {
+                data: product.imageUrls.map(url => ({IMG_URL: url}))
             }
         }
     }});
+}
+
+export function editProduct(productId:number, data: Partial<Product>) {
+    return prisma.product.update({
+        where: {
+            PRO_ID: productId
+        },
+        data
+    });
 }

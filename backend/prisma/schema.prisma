@@ -25,23 +25,11 @@ model Product {
   PRO_NAME String
   PRO_PRICE Float
   PRO_IMAGES Image[]
-  PRO_AVAILABILITIES Availability[]
+  PRO_AVAILABLE_QUANTITY Int
   PRO_LINES Line[]
   PRO_FEEDBACKS Feedback[]
   PRO_CREATED DateTime @default(now())
   PRO_UPDATED DateTime @updatedAt
-}
-
-model Availability {
-  STORE Store @relation(fields: [STR_ID], references: [STR_ID], onDelete: Cascade, onUpdate: Cascade)
-  STR_ID Int
-  PRODUCT Product @relation(fields: [PRO_ID], references: [PRO_ID], onDelete: Cascade, onUpdate: Cascade)
-  PRO_ID Int
-  AV_QUANTITY Int
-  AV_CREATED DateTime @default(now())
-  AV_UPDATED DateTime @updatedAt
-
-  @@id([STR_ID, PRO_ID])
 }
 
 model User {
@@ -51,6 +39,7 @@ model User {
   USR_LAST_NAME String
   USR_PASSWORD String
   USR_ROLE Role @default(customer)
+  USR_IMAGE String?
   USR_ORDERS Order[]
   USR_FEEDBACKS Feedback[]
   USR_SESSIONS Session[]
@@ -102,7 +91,6 @@ model Store {
   STR_HOURS String
   STR_PHONE String
   STR_ORDERS Order[]
-  STR_AVAILABILITIES Availability[]
   STR_CREATED DateTime @default(now())
   STR_UPDATED DateTime @updatedAt
 

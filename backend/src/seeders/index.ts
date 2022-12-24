@@ -2,6 +2,7 @@ import prisma from "../utils/db";
 import log from "../utils/logger";
 import { users, stores, products } from './seedData';
 import { faker } from '@faker-js/faker';
+import { Role } from "@prisma/client";
 
 async function seedUsers() {
     try {
@@ -12,6 +13,8 @@ async function seedUsers() {
                 USR_FIRST_NAME: us.firstName,
                 USR_LAST_NAME: us.lastName,
                 USR_PASSWORD: us.password,
+                USR_IMAGE: `https://ui-avatars.com/api/?name=${us.firstName}+${us.lastName}`,
+                USR_ROLE: Role.manager,
             }))
         });
         log.info("Seeded users");
@@ -49,9 +52,16 @@ async function seedProducts() {
                 data: {
                     PRO_NAME: p.title,
                     PRO_PRICE: p.price,
+                    PRO_AVAILABLE_QUANTITY: parseInt(faker.random.numeric(3)),
                     PRO_IMAGES: {
-                        create: {
-                            IMG_URL: p.image
+                        createMany: {
+                            data: [
+                                {
+                                    IMG_URL: p.image
+                                }, {
+                                    IMG_URL: 'https://via.placeholder.com/500'
+                                }
+                            ]
                         }
                     }
                 }
@@ -60,30 +70,6 @@ async function seedProducts() {
         log.info("Seeded products");
     } catch (error) {
         log.error("Error seeding products");
-        throw error;
-    }
-}
-
-async function seedAvailabilities() {
-    try {
-        await prisma.availability.deleteMany();
-        const stores = await prisma.store.findMany();
-        const products = await prisma.product.findMany();
-        await Promise.all(stores.map(async store => {
-            await Promise.all(products.map(async product => {
-                if(parseInt(faker.random.numeric(3)) % 2)
-                    await prisma.availability.create({
-                        data: {
-                            AV_QUANTITY: parseInt(faker.random.numeric(2)),
-                            STR_ID: store.STR_ID,
-                            PRO_ID: product.PRO_ID,
-                        }
-                    });
-            }));
-        }));
-        log.info("Seeded availabilities");
-    } catch (error) {
-        log.error("Error seeding availabilities");
         throw error;
     }
 }
@@ -116,7 +102,6 @@ async function main() {
         await seedUsers();
         await seedStores();
         await seedProducts();
-        await seedAvailabilities();
         await seedFeedbacks();
     } catch (error) {
         log.error(error);
