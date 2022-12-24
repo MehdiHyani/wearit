@@ -10,6 +10,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Manager from './pages/Manager';
 import NotFound from './pages/NotFound';
+import Products from './pages/Products';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 
@@ -36,6 +37,8 @@ const App = () => {
         loading
             ? <h1>Loading...</h1>
             : <Routes>
+                <Route index element={<Landing />} />
+                <Route path='products' element={< Products />} />
                 <Route path='login' element={<Login />} />
                 <Route path='signup' element={<Signup />} />
                 <Route element={<Navbar />}>

@@ -19,6 +19,7 @@ model Image {
   IMG_UPDATED DateTime @updatedAt
 }
 
+// TODO Add a description for the product
 model Product {
   PRO_ID Int @id @default(autoincrement())
   PRO_NAME String
