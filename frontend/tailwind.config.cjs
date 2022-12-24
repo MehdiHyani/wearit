@@ -5,6 +5,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                chivo: ['"Nunito"', "sans-serif"]
+            },
             colors: {
                 primary: '#292929',
                 secondary: '#efc700',
