@@ -11,18 +11,18 @@ const Landing = () => {
     if (error) {
         return <h1>Something went wrong</h1>;
     }
-    console.log(data)
     return (
         <div className="p-[10rem] text-tertiary bg-primary min-w-screen min-h-screen">
             <div className="grid grid-cols-[40rem] gap-y-4 gap-x-16 grid-cols-2 grid-rows-2 justify-center items-center">
                 <Card
                     product={data[0]}
                     titleStyle={'text-3xl'}
-                    generalStyle={'bg-tertiary w-[40rem] h-[25rem] w-full row-span-2'}
+                    generalStyle={'bg-white w-[40rem] h-[25rem] w-full row-span-2'}
                     priceStyle={'text-[2rem]'}
                     btnStyle={
                         'text-3xl h-2/3 w-2/3 rounded-3xl from-[#43CBFF] to-[#9708CC]'
                     }
+                    ImgStyle={'w-[20rem] h-[16em]'}
                 />
                 <Card
                     product={data[1]}
@@ -34,6 +34,7 @@ const Landing = () => {
                     btnStyle={
                         'text-md h-2/3 w-2/3 rounded-xl from-[#FFE143] to-[#9708CC]'
                     }
+                    ImgStyle={'w-[8rem] h-[11rem]'}
                 />
                 <Card
                     product={data[2]}
@@ -45,6 +46,7 @@ const Landing = () => {
                     btnStyle={
                         'text-md h-2/3 w-2/3 rounded-xl from-[#FFE143] to-[#9708CC]'
                     }
+                    ImgStyle={'w-[8rem] h-[11rem]'}
                 />
             </div>
             <div className='p-5 mt-14 rounded-lg bg-gradient-to-r from-[#FCFF00] via-[#E5AE5C] to-[#12A4C3]'>
@@ -54,14 +56,15 @@ const Landing = () => {
                         <Card
                             key={product.PRO_NAME}
                             product={product}
-                            titleStyle={'text-sm text-secondary'}
+                            titleStyle={'text-sm overflow-hidden text-secondary'}
                             generalStyle={
-                                'bg-primary w-[14rem] h-[12rem]'
+                                'bg-white w-[14rem] h-[12rem]'
                             }
                             priceStyle={'pt-2 text-secondary text-[1rem]'}
                             btnStyle={
                                 'text-[0.8rem] h-2/3 w-2/3 rounded-md from-[#5ee09f] to-[#12A4C3]'
                             }
+                            ImgStyle={'w-[6rem] h-[10rem]'}
                         />
                     ))}
                 </div>

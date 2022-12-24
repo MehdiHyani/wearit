@@ -48,6 +48,11 @@ export interface CardProps {
     product: Product
     generalStyle: string
     titleStyle: string
+    ImgStyle: string
     btnStyle: string
     priceStyle: string
+};
+
+export type CartItem = Product & {
+    quantity: number
 };
