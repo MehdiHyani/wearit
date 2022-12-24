@@ -5,8 +5,9 @@ import {string, z} from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
 import { selectCurrentUser } from '../app/auth/authSlice';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppSelector } from '../app/hooks';
 import { SignupBody } from '../utils/types';
+import { useSignupMutation } from '../app/user/userApiSlice';
 
 
 
@@ -19,6 +20,7 @@ const schema = z.object({
 
 const Signup = () => {
 
+  const [signup] = useSignupMutation();
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
 
@@ -30,8 +32,8 @@ const Signup = () => {
   const { register, handleSubmit, formState: {errors} } = useForm<SignupBody>(({resolver: zodResolver(schema)}));
   const onSubmit = async (data: SignupBody) => {
     try {
-      
-      navigate('/');
+      await signup(data);
+      navigate('/login');
     }catch (error) {
       console.log(error);
     }
@@ -56,12 +58,12 @@ const Signup = () => {
             
                 <label className='font-medium'>First Name:</label>
                 <input {...register('firstName', { required: 'Required first name'})}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="First name"/>
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" placeholder="First name"/>
                 <p className='mt-2 mb-5 text-red-500 text-xs'>{errors.firstName?.message}</p>
                 
                 <label className='font-medium'>Last Name:</label>
                 <input {...register('lastName', { required: 'Required last name'})}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Second name"/>
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" placeholder="Second name"/>
                 <p className='mt-2 mb-5 text-red-500 text-xs'>{errors.lastName?.message}</p>
 
 

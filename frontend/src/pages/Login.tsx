@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import logo from '../assets/logo.png'
 import {string, z} from 'zod'
@@ -23,20 +23,22 @@ const Login = () => {
   const [login] = useLoginMutation();
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
+  const [error, setError] = useState("");
 
   
   useEffect(() => {
       if (user) { navigate('/'); }
   }, []);
   
+  
   const { register, handleSubmit, formState: {errors} } = useForm<LoginBody>(({resolver: zodResolver(schema)}));
   const onSubmit = async (data: LoginBody) => { 
     try {
-      const { user } = await login(data).unwrap();
+      const user = await login(data).unwrap();
       dispatch(setCredentials(user));
       navigate('/');
     }catch (error) {
-      console.log(error);
+      setError("Wrong credentials!")
     }
   };
 
@@ -52,7 +54,7 @@ const Login = () => {
           <div className="flex flex-col centered">
 
             <div className="flex flex-row text-3xl font-bold font-chivo"><h1 className='underline'>Welcome</h1><h1 className='indent-1'>Back!</h1></div>
-            <p className='font-chivo text-gray-900 dark:text-gray-300'>Where your requests are commends</p>
+            <p className='font-chivo text-gray-900 dark:text-gray-300'>Where your requests are our commands</p>
 
             <form className='mx-auto mt-10 gap-5' onSubmit={handleSubmit(onSubmit)}>
 
@@ -65,6 +67,7 @@ const Login = () => {
               <input {...register('password', { required: 'Required Password', minLength: {value: 4, message: 'Minimum length is 4'}})}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="**********"/>
               <p className='mt-2 mb-5 text-red-500 text-xs'>{errors.password?.message}</p>
+              {error? <p className='mt-2 mb-5 text-red-500 text-xs centered'>{error}</p> : <></> }
               
               <div className="mt-4 flex justify-between">
 

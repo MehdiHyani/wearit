@@ -229,11 +229,6 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-3.0.1.tgz#5f8f2bca0a5863cb69bc0b0acd88c96cb1d4ae10"
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
 
-"@types/mongo-sanitize@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@types/mongo-sanitize/-/mongo-sanitize-1.0.1.tgz#3b3457f713f69377103df427c1cd89daf53daa64"
-  integrity sha512-xh7/jNaerAu4rlOoGd+2S0D+rSbQyni58+uSuNbay0ynIaifKZBOKPRMY7Ti/ekqaX8IqX4XAbkq2uMZKpdiig==
-
 "@types/morgan@^1.9.3":
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/@types/morgan/-/morgan-1.9.3.tgz#ae04180dff02c437312bc0cfb1e2960086b2f540"
@@ -2143,11 +2138,6 @@ mkdirp@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
-
-mongo-sanitize@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/mongo-sanitize/-/mongo-sanitize-1.1.0.tgz#01346b55f90716a42de3a1f957500a11c0752c36"
-  integrity sha512-6gB9AiJD+om2eZLxaPKIP5Q8P3Fr+s+17rVWso7hU0+MAzmIvIMlgTYuyvalDLTtE/p0gczcvJ8A3pbN1XmQ/A==
 
 morgan@^1.10.0:
   version "1.10.0"
