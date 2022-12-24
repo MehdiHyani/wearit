@@ -75,55 +75,28 @@ export function getOrderById(orderId: number) {
     where: {
       ORD_ID: orderId,
     },
-    select: {
+    include: {
+      USER: true,
       ORD_LINES: true,
-      USER: {
-        select: {
-          USR_FIRST_NAME: true,
-          USR_LAST_NAME: true,
-          USR_ID: true,
-        }
-      },
-    },
+    }
   });
 }
 
 export async function createOrder(userId: number, data: createOrderInput) {
   let isOrderValid = true;
 
-  // Ensure products are available in that certain Store
+  // Ensure products are available
   // and that their prices match
   await Promise.all(
     data.lines.map(async line => {
-      const availability = await prisma.availability.findFirst({
+      const product = await prisma.product.findUniqueOrThrow({
         where: {
-          AND: [
-            {
-              AV_QUANTITY: {
-                gte: line.quantity,
-              },
-            },
-            {
-              PRO_ID: {
-                equals: line.productId,
-              },
-            },
-            {
-              STR_ID: {
-                equals: data.storeId,
-              },
-            },
-            {
-                PRODUCT: {
-                    PRO_PRICE: {
-                        equals: line.price
-                    }
-                }
-            }
-          ],
+          PRO_ID: line.productId
         }
       });
-      if (!availability) isOrderValid = false;
+
+      if (product.PRO_AVAILABLE_QUANTITY < line.quantity || line.price !== product.PRO_PRICE)
+        isOrderValid = false;
     })
   );
 
@@ -155,15 +128,12 @@ export async function createOrder(userId: number, data: createOrderInput) {
       },
     }),
     ...data.lines.map(line => {
-      return prisma.availability.update({
+      return prisma.product.update({
         where: {
-          STR_ID_PRO_ID: {
-            PRO_ID: line.productId,
-            STR_ID: data.storeId,
-          },
+          PRO_ID: line.productId
         },
         data: {
-          AV_QUANTITY: {
+          PRO_AVAILABLE_QUANTITY: {
             decrement: line.quantity,
           },
         },

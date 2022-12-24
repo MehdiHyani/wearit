@@ -1,3 +1,4 @@
+import { Role, User } from "@prisma/client";
 import { NotFoundError } from "@prisma/client/runtime";
 import { Request, Response } from "express";
 import { createOrderInput, getOrdersInput } from "../schema/order.schema";
@@ -20,6 +21,11 @@ export async function createOrderController(req: Request<Record<string, never>,
 export async function getOrderByIdController(req: Request, res: Response) {
     try {
         const order = await getOrderById(parseInt(req.params.orderId));
+        const loggedUser = res.locals as Partial<User>;
+        if(loggedUser.USR_ROLE && loggedUser.USR_ROLE !== Role.manager){
+            if(order.USR_ID !== loggedUser.USR_ID)
+                return res.sendStatus(403);
+        }
         return res.status(200).send(order);
     } catch (error) {
         if(error instanceof NotFoundError)
@@ -30,6 +36,12 @@ export async function getOrderByIdController(req: Request, res: Response) {
 
 export async function cancelOrderController(req: Request, res: Response) {
     try {
+        const order = await getOrderById(parseInt(req.params.orderId));
+        const loggedUser = res.locals as Partial<User>;
+        if(loggedUser.USR_ROLE && loggedUser.USR_ROLE !== Role.manager){
+            if(order.USR_ID !== loggedUser.USR_ID)
+                return res.sendStatus(403);
+        }
         await cancelOrder(parseInt(req.params.orderId));
         return res.sendStatus(200);
     } catch (error) {
