@@ -52,7 +52,6 @@ const Signup = () => {
                     <div className="flex flex-row text-3xl font-bold font-chivo"><h1 className='underline'>Create</h1><h1 className='indent-1'>&nbsp;your Account</h1></div>
                     <p className='font-chivo text-gray-900 dark:text-gray-300'>Start shopping now!</p>
 
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     <form className='mt-10 gap-5' onSubmit={handleSubmit(onSubmit)}>
 
                         <label className='font-medium'>First Name:</label>
