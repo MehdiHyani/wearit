@@ -12,7 +12,7 @@ const Landing = () => {
         return <h1>Something went wrong</h1>;
     }
     return (
-        <div className="p-[10rem] text-tertiary bg-primary min-w-screen min-h-screen">
+        <div className="p-[2rem] text-tertiary bg-primary min-w-screen min-h-screen">
             <div className="grid grid-cols-[40rem] gap-y-4 gap-x-16 grid-cols-2 grid-rows-2 justify-center items-center">
                 <Card
                     product={data[0]}

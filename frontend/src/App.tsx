@@ -14,6 +14,8 @@ import Products from './pages/Products';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Cart from './pages/Cart';
+import NewProduct from './pages/NewProduct';
+import EditProduct from './pages/EditProduct';
 
 const App = () => {
     const dispatch = useAppDispatch();
@@ -42,11 +44,13 @@ const App = () => {
                 <Route path='signup' element={<Signup />} />
                 <Route element={<Navbar />}>
                     <Route index element={<Landing />} />
+                    <Route path='products' element={< Products />} />
                     <Route element={<RequireAuth />}>
-                        <Route path='products' element={< Products />} />
                         <Route path='profile' />
                         <Route path='cart' element={< Cart />} />
                         <Route element={<RequireManager />}>
+                            <Route path='products/new' element={<NewProduct />} />
+                            <Route path='products/:productId/edit' element={<EditProduct />} />
                             <Route path='manager' element={<Manager />} />
                         </Route>
                         <Route />

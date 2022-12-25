@@ -28,6 +28,7 @@ module.exports = {
         '@typescript-eslint/semi': ['error', 'always'],
         '@typescript-eslint/strict-boolean-expressions': 'off',
         '@typescript-eslint/space-before-function-paren': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
         semi: ['error', 'always']
     }
 };

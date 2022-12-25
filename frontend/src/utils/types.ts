@@ -17,34 +17,6 @@ export interface User {
 export interface LoginResult {
     user: User
 };
-
-export interface ProductImage {
-    IMG_ID: number
-    PRO_ID: number
-    IMG_URL: string
-    IMG_CREATED: Date
-    IMG_UPDATED: Date
-}
-
-export interface ProductFeedback {
-    FDB_ID: number
-    FDB_COMMENT: string
-    USR_ID: number
-    PRO_ID: number
-    FDB_CREATED: Date
-    FDB_UPDATED: Date
-}
-
-export interface Product {
-    PRO_ID: number
-    PRO_NAME: string
-    PRO_PRICE: number
-    PRO_AVAILABLE_QUANTITY: number
-    PRO_CREATED: Date
-    PRO_UPDATED: Date
-    PRO_IMAGES: ProductImage[]
-    PRO_FEEDBACKS: ProductFeedback[]
-}
 export interface CardProps {
     product: Product
     generalStyle: string
@@ -82,3 +54,37 @@ export interface Order {
     ORD_CREATED: Date
     ORD_UPDATED: Date
 }
+export interface Product {
+    PRO_ID: number
+    PRO_NAME: string
+    PRO_PRICE: number
+    PRO_AVAILABLE_QUANTITY: number
+    PRO_CREATED: Date
+    PRO_UPDATED: Date
+    PRO_IMAGES: ProductImage[]
+    PRO_FEEDBACKS: ProductFeedback[]
+}
+
+export interface ProductImage {
+    IMG_ID: number
+    PRO_ID: number
+    IMG_URL: string
+    IMG_CREATED: Date
+    IMG_UPDATED: Date
+}
+
+export interface ProductFeedback {
+    FDB_ID: number
+    FDB_COMMENT: string
+    USR_ID: number
+    PRO_ID: number
+    FDB_CREATED: Date
+    FDB_UPDATED: Date
+}
+
+export interface NewProductBody {
+    availableQuantity: number
+    imageUrls?: string[]
+    name: string
+    price: number
+};

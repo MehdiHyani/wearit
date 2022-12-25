@@ -3,8 +3,7 @@ import { Role } from '@prisma/client';
 
 function verifyManager(req: Request, res: Response, next: NextFunction) {
     const { user } = res.locals;
-
-    if (user.role !== Role.manager) {
+    if (user.USR_ROLE !== Role.manager) {
         return res.sendStatus(403);
     }
 
