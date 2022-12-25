@@ -58,27 +58,27 @@ export type CartItem = Product & {
     quantity: number
 };
 export interface SignupBody {
-    firstName: string,
-    lastName: string,
-    email: string,
+    firstName: string
+    lastName: string
+    email: string
     password: string
-  }
+}
 
 export interface Store {
-    STR_ID: number;
-    STR_NAME: string;
-    STR_LATITUDE: number;
-    STR_LONGITUDE: number;
-    STR_HOURS: string;
-    STR_PHONE: string;
-    STR_CREATED: Date;
-    STR_UPDATED: Date;
+    STR_ID: number
+    STR_NAME: string
+    STR_LATITUDE: number
+    STR_LONGITUDE: number
+    STR_HOURS: string
+    STR_PHONE: string
+    STR_CREATED: Date
+    STR_UPDATED: Date
 }
 
 export interface Order {
-    ORD_ID: number;
-    ORD_STATUS: orderStatus;
-    ORD_TOTAL: number;
-    ORD_CREATED: Date;
-    ORD_UPDATED: Date;
+    ORD_ID: number
+    ORD_STATUS: orderStatus
+    ORD_TOTAL: number
+    ORD_CREATED: Date
+    ORD_UPDATED: Date
 }
