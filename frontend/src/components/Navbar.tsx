@@ -89,6 +89,9 @@ const Navbar = () => {
                             <li>
                                 <a className="block px-4 py-2 text-sm text-white hover:bg-secondary hover:text-black cursor-pointer">Profile</a>
                             </li>
+                            {user?.USR_ROLE === 'manager' && <li>
+                                <a href='/products/new' className="block px-4 py-2 text-sm text-white hover:bg-secondary hover:text-black cursor-pointer">Add products</a>
+                            </li>}
                             <li>
                                 <a onClick={handleLogout} className="block px-4 py-2 text-sm text-white hover:bg-secondary hover:text-black cursor-pointer">Sign out</a>
                             </li>
