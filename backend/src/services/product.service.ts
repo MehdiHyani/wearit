@@ -5,6 +5,10 @@ import prisma from "../utils/db";
 
 export function getProducts(page = 1) {
     return prisma.product.findMany({
+        include: {
+            PRO_IMAGES: true,
+            PRO_FEEDBACKS: true,
+        },
         orderBy: {
             PRO_LINES: {
                 _count: 'desc'
@@ -32,6 +36,10 @@ export function getFeaturedProducts() {
 
 export function getProductsByQuery(query: string, page = 1) {
     return prisma.product.findMany({
+        include: {
+            PRO_IMAGES: true,
+            PRO_FEEDBACKS: true,
+        },
         where: {
             PRO_NAME: {
                 contains: query,

@@ -25,6 +25,12 @@ export const productApiSlice = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: product
             })
+        }),
+        getAllProducts: builder.query<Product[], {}>({
+            query: () => ({
+                url: '/products',
+                method: 'GET'
+            })
         })
     })
 });
@@ -32,7 +38,8 @@ export const productApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetProductQuery,
     useLazyGetProductQuery,
-    useGetFeaturedProductsQuery,
     useCreateProductMutation,
-    useEditProductMutation
+    useEditProductMutation,
+    useGetFeaturedProductsQuery,
+    useGetAllProductsQuery
 } = productApiSlice;

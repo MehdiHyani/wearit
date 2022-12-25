@@ -87,4 +87,4 @@ export interface NewProductBody {
     imageUrls?: string[]
     name: string
     price: number
-}
+};
