@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useGetAllProductsQuery } from '../app/product/productApiSlice';
 import ProductCard from '../components/ProductCard';
 
 const Products = () => {
+    const { search } = useLocation();
     const [page, setPage] = useState(1);
-    const { data, isLoading, error } = useGetAllProductsQuery({ page });
+    const { data, isLoading, error } = useGetAllProductsQuery({ page, query: search.slice(1) }, { refetchOnMountOrArgChange: true });
     if (isLoading || !data) {
         return <h1>Loading...</h1>;
     }
     if (error) {
         return <h1>Something went wrong</h1>;
     }
-    console.log(data);
     return (
         <section className="overflow-x-hidden p-[2rem] text-tertiary bg-primary min-w-screen min-h-screen">
             <div className='text-[2rem] font-semibold'>Results: {data.length}</div>

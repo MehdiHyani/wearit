@@ -26,9 +26,9 @@ export const productApiSlice = apiSlice.injectEndpoints({
                 body: product
             })
         }),
-        getAllProducts: builder.query<Product[], { page: number }>({
-            query: ({ page }) => ({
-                url: `/products?page=${page}`,
+        getAllProducts: builder.query<Product[], { page: number, query?: string }>({
+            query: ({ page, query = '' }) => ({
+                url: `/products/search?page=${page}&query=${query}`,
                 method: 'GET'
             })
         })

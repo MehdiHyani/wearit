@@ -16,7 +16,7 @@ const productRouter = Router();
 productRouter
   .get("/", getProductsController)
   .get("/featured", getFeaturedProductsController)
-  .get("/search", validateResource(getProductsByQuerySchema), getProductsByQueryController)
+  .get("/search", getProductsByQueryController)
   .get("/:productId", getProductByIdController);
 
 // Private [manager] routes

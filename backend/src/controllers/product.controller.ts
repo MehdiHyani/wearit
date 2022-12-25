@@ -22,10 +22,10 @@ export async function getFeaturedProductsController(req: Request, res: Response)
     }
 }
 
-export async function getProductsByQueryController(req: Request<Record<string, never>,
-    Record<string, never>, getProductsByQueryInput>, res: Response) {
+export async function getProductsByQueryController(req: Request, res: Response) {
     try {
-        const { body: { page, query } } = req;
+        const page = req.query.page ? parseInt(req.query.page as string) : undefined;
+        const query = (req.query.query ?? '') as string;
         const products = await getProductsByQuery(query, page);
         return res.send(products);
     } catch (error) {
