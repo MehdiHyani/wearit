@@ -17,6 +17,53 @@ export interface User {
 export interface LoginResult {
     user: User
 };
+export interface CardProps {
+    product: Product
+    generalStyle: string
+    titleStyle: string
+    ImgStyle: string
+    btnStyle: string
+    priceStyle: string
+};
+
+export type CartItem = Product & {
+    quantity: number
+};
+export interface SignupBody {
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+}
+
+export interface Store {
+    STR_ID: number
+    STR_NAME: string
+    STR_LATITUDE: number
+    STR_LONGITUDE: number
+    STR_HOURS: string
+    STR_PHONE: string
+    STR_CREATED: Date
+    STR_UPDATED: Date
+}
+
+export interface Order {
+    ORD_ID: number
+    ORD_STATUS: orderStatus
+    ORD_TOTAL: number
+    ORD_CREATED: Date
+    ORD_UPDATED: Date
+}
+export interface Product {
+    PRO_ID: number
+    PRO_NAME: string
+    PRO_PRICE: number
+    PRO_AVAILABLE_QUANTITY: number
+    PRO_CREATED: Date
+    PRO_UPDATED: Date
+    PRO_IMAGES: ProductImage[]
+    PRO_FEEDBACKS: ProductFeedback[]
+}
 
 export interface ProductImage {
     IMG_ID: number
@@ -35,50 +82,9 @@ export interface ProductFeedback {
     FDB_UPDATED: Date
 }
 
-export interface Product {
-    PRO_ID: number
-    PRO_NAME: string
-    PRO_PRICE: number
-    PRO_AVAILABLE_QUANTITY: number
-    PRO_CREATED: Date
-    PRO_UPDATED: Date
-    PRO_IMAGES: ProductImage[]
-    PRO_FEEDBACKS: ProductFeedback[]
-}
-export interface CardProps {
-    product: Product
-    generalStyle: string
-    titleStyle: string
-    ImgStyle: string
-    btnStyle: string
-    priceStyle: string
-};
-
-export type CartItem = Product & {
-    quantity: number
-};
-export interface SignupBody {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string
-  }
-
-export interface Store {
-    STR_ID: number;
-    STR_NAME: string;
-    STR_LATITUDE: number;
-    STR_LONGITUDE: number;
-    STR_HOURS: string;
-    STR_PHONE: string;
-    STR_CREATED: Date;
-    STR_UPDATED: Date;
-}
-
-export interface Order {
-    ORD_ID: number;
-    ORD_STATUS: orderStatus;
-    ORD_TOTAL: number;
-    ORD_CREATED: Date;
-    ORD_UPDATED: Date;
+export interface NewProductBody {
+    availableQuantity: number
+    imageUrls?: string[]
+    name: string
+    price: number
 }

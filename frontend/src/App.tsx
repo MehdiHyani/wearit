@@ -13,6 +13,8 @@ import NotFound from './pages/NotFound';
 import Products from './pages/Products';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
+import NewProduct from './pages/NewProduct';
+import EditProduct from './pages/EditProduct';
 
 const App = () => {
     const dispatch = useAppDispatch();
@@ -37,14 +39,16 @@ const App = () => {
         loading
             ? <h1>Loading...</h1>
             : <Routes>
-                <Route path='products' element={< Products />} />
                 <Route path='login' element={<Login />} />
                 <Route path='signup' element={<Signup />} />
                 <Route element={<Navbar />}>
                     <Route index element={<Landing />} />
                     <Route element={<RequireAuth />}>
+                        <Route path='products' element={< Products />} />
                         <Route path='profile' />
                         <Route element={<RequireManager />}>
+                            <Route path='products/new' element={<NewProduct />} />
+                            <Route path='products/:productId/edit' element={<EditProduct />} />
                             <Route path='manager' element={<Manager />} />
                         </Route>
                         <Route />

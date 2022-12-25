@@ -10,16 +10,24 @@
     "lint": "eslint src/**/*.ts[x]"
   },
   "dependencies": {
+    "@elastic/datemath": "^5.0.3",
+    "@elastic/eui": "^72.0.0",
+    "@emotion/css": "^11.10.5",
+    "@emotion/react": "^11.10.5",
     "@hookform/resolvers": "^2.9.10",
     "@reduxjs/toolkit": "^1.9.1",
     "@typescript-eslint/parser": "^5.0.0",
+    "add": "^2.0.6",
     "axios": "^1.2.1",
+    "moment": "^2.29.4",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.41.0",
+    "react-hook-form": "^7.41.1",
     "react-icons": "^4.7.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.5",
+    "yarn": "^1.22.19",
     "zod": "^3.20.2"
   },
   "devDependencies": {
