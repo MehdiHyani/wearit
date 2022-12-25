@@ -37,7 +37,6 @@ const App = () => {
         loading
             ? <h1>Loading...</h1>
             : <Routes>
-                <Route index element={<Landing />} />
                 <Route path='products' element={< Products />} />
                 <Route path='login' element={<Login />} />
                 <Route path='signup' element={<Signup />} />
