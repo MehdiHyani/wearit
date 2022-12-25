@@ -1,26 +1,25 @@
 import React from 'react';
+import { useGetAllProductsQuery } from '../app/product/productApiSlice';
+import ProductCard from '../components/ProductCard';
 
 const Products = () => {
+    const { data, isLoading, error } = useGetAllProductsQuery({});
+    if (isLoading || !data) {
+        return <h1>Loading...</h1>;
+    }
+    if (error) {
+        return <h1>Something went wrong</h1>;
+    }
+    console.log(data);
     return (
-        <section className="flex flex-col">
+        <section className="p-[10rem] text-tertiary bg-primary min-w-screen min-h-screen">
             <div className='flex'>
-                <h1 className='inline-block'>Casablanca Store</h1>
-                <div className='inline-block'>
-            Trier Par:
-                </div>
             </div>
-            <div>9999 results</div>
+            <div className='text-[2rem] font-semibold'>Results: {data.length}</div>
             <div className='grid grid-cols-5 gap-2.5 '>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
+                {data.map((product, index) => (
+                    <ProductCard key={index} product={product} />
+                ))}
             </div>
         </section>
     );
