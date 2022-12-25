@@ -13,7 +13,7 @@ const Products = () => {
     }
     console.log(data);
     return (
-        <section className="p-[2rem] text-tertiary bg-primary min-w-screen min-h-screen">
+        <section className="overflow-x-hidden p-[2rem] text-tertiary bg-primary min-w-screen min-h-screen">
             <div className='text-[2rem] font-semibold'>Results: {data.length}</div>
             <div className='grid grid-cols-5 gap-2.5 '>
                 {data.map((product, index) => (
