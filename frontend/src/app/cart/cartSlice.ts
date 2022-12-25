@@ -16,6 +16,7 @@ const cartSlice = createSlice({
             } else {
                 state.cart.push({ ...action.payload, quantity: 1 });
             }
+            localStorage.setItem('cart', JSON.stringify(state.cart));
         },
         incrementQuantity: (state, action) => {
             const item = state.cart.find((item) => item.PRO_ID === action.payload);
@@ -34,6 +35,7 @@ const cartSlice = createSlice({
         removeItem: (state, action) => {
             const removeItem = state.cart.filter((item) => item.PRO_ID !== action.payload);
             state.cart = removeItem;
+            localStorage.setItem('cart', JSON.stringify(state.cart));
         }
     }
 });
