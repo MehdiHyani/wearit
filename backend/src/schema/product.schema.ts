@@ -34,7 +34,7 @@ export const editProductSchema = object({
 });
 
 export const getProductsSchema = object({
-    body: object({
+    params: object({
         page: number().optional()
     })
 });
@@ -51,7 +51,7 @@ export const getProductsByQuerySchema = object({
 
 export type getProductsByQueryInput = TypeOf<typeof getProductsByQuerySchema>['body'];
 
-export type getProductsInput = TypeOf<typeof getProductsSchema>['body'];
+export type getProductsInput = TypeOf<typeof getProductsSchema>['params'];
 
 export type CreateProductInput = TypeOf<typeof createProductSchema>['body'];
 

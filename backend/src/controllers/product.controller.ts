@@ -1,12 +1,11 @@
 import { NotFoundError } from "@prisma/client/runtime";
 import { Request, Response } from "express";
-import { CreateProductInput, EditProductInput, getProductsByQueryInput, getProductsInput } from "../schema/product.schema";
+import { CreateProductInput, EditProductInput, getProductsByQueryInput } from "../schema/product.schema";
 import { createProduct, deleteProductById, editProduct, getFeaturedProducts, getProductById, getProducts, getProductsByQuery } from "../services/product.service";
 
-export async function getProductsController(req: Request<Record<string, never>,
-    Record<string, never>, getProductsInput>, res: Response) {
+export async function getProductsController(req: Request, res: Response) {
     try {
-        const { body: { page } } = req;
+        const page = req.query.page ? parseInt(req.query.page as string) : undefined;
         const products = await getProducts(page);
         return res.send(products);
     } catch (error) {

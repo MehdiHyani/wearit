@@ -14,7 +14,7 @@ const productRouter = Router();
 
 // Public routes
 productRouter
-  .get("/", validateResource(getProductsSchema), getProductsController)
+  .get("/", getProductsController)
   .get("/featured", getFeaturedProductsController)
   .get("/search", validateResource(getProductsByQuerySchema), getProductsByQueryController)
   .get("/:productId", getProductByIdController);
