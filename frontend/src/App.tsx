@@ -13,6 +13,7 @@ import NotFound from './pages/NotFound';
 import Products from './pages/Products';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
+import Cart from './pages/Cart';
 
 const App = () => {
     const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ const App = () => {
                     <Route element={<RequireAuth />}>
                         <Route path='products' element={< Products />} />
                         <Route path='profile' />
+                        <Route path='cart' element={< Cart />} />
                         <Route element={<RequireManager />}>
                             <Route path='manager' element={<Manager />} />
                         </Route>

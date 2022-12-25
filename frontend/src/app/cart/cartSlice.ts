@@ -1,3 +1,4 @@
+import { RootState } from './../store';
 // src/redux/cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { CartItem } from '../../utils/types';
@@ -44,3 +45,4 @@ export const {
     decrementQuantity,
     removeItem
 } = cartSlice.actions;
+export const selectCart = (state: RootState) => state.cart.cart;
